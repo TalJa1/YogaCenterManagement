@@ -77,11 +77,6 @@ StyleCopReport.xml
 *.browsing.json
 *.DS_Store
 
-# ASP.NET Core MVC
-appsettings.json
-appsettings.*.json
-launchSettings.json
-
 # Entity Framework Core
 *.DbContext.cs
 *.DbContextModelSnapshot.cs
