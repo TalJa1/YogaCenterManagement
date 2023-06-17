@@ -1,0 +1,102 @@
+# ASP.NET Core
+## Build and Publish directories
+obj/
+bin/
+Publish/
+
+## Local development
+appsettings.Development.json
+
+# Visual Studio Code
+.vscode/
+
+# Visual Studio
+.vs/
+
+# NuGet
+*.nuget.props
+*.nuget.targets
+
+# MSTest
+*.testsettings
+
+# Resharper
+_ReSharper.*/
+
+# Rider
+.idea/
+
+# Test Results
+TestResults/
+
+# User-specific files
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+AnyCPU/
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.pch
+*.pdb
+*.pgc
+*.pgd
+*.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.browsing.json
+*.DS_Store
+
+# ASP.NET Core MVC
+appsettings.json
+appsettings.*.json
+launchSettings.json
+
+# Entity Framework Core
+*.DbContext.cs
+*.DbContextModelSnapshot.cs
+*.edmx
+*.csdl
+*.ssdl
+*.msl
+
+# Razor precompiled views
+*.PrecompiledViews.dll
+*.PrecompiledViews.pdb
+_razor.precompile.runtimeconfig.json
+
+# Blazor WebAssembly
+**/blazor.webassembly.publish.config.json
+**/wwwroot/publish/
+
+# End of ASP.NET Core .gitignore
