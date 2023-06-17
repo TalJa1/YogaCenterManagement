@@ -22,7 +22,6 @@ namespace YogaCenterManagement
             services.AddScoped<SalaryChangeRequestService>();
             services.AddScoped<PaymentService>();
 
-            services.AddRazorPages();
             services.AddSession();
             return services;
         }
