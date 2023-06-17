@@ -3,8 +3,7 @@ using YogaCenterManagement;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
-DependencyInjection.ConfigureServices(builder.Services);
+builder.Services.ConfigureServices();
 builder.Services.AddSession();
 var app = builder.Build();
 

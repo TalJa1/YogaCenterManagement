@@ -4,8 +4,7 @@ obj/
 bin/
 Publish/
 
-## Local development
-appsettings.Development.json
+
 
 # Visual Studio Code
 .vscode/
