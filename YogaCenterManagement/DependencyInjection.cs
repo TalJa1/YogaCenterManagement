@@ -7,7 +7,7 @@ namespace YogaCenterManagement
 {
     public static class DependencyInjection
     {
-        public static void ConfigureServices(IServiceCollection services)
+        public static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
             services.AddTransient<YogaCenterContext>();
             services.AddScoped<AttendanceService>();
@@ -21,6 +21,10 @@ namespace YogaCenterManagement
             services.AddScoped<RoomService>();
             services.AddScoped<SalaryChangeRequestService>();
             services.AddScoped<PaymentService>();
+
+            services.AddRazorPages();
+            services.AddSession();
+            return services;
         }
     }
 }
