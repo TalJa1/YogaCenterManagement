@@ -54,11 +54,9 @@ namespace YogaCenterManagement.Pages.UserFlow
             return RedirectToPage("HomePage");
         }
 
-        public IActionResult OnPostAddToCart(int productId)
-        {
-            _cartService.AddItemToCart(productId);
-            FlowerBouquet = _service.GetAll();
-            return Page();
-        }
+        //public IActionResult OnPostAddToCart(int classId)
+        //{
+        //    return RedirectToPage("ClassEnroll", new { classID = classId });
+        //}
     }
 }

@@ -102,15 +102,22 @@ else
                     @Html.DisplayFor(modelItem => item.Room.RoomName)
                 </td>
                 <td>
-                    @*<a asp-page="./Edit" asp-route-id="@item.ClassId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ClassId">Details</a> |
+                    <a asp-page="ClassEnroll" asp-route-id="@item.ClassId">Pay and Enroll</a>
+                @*<a asp-page="./Details" asp-route-id="@item.ClassId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ClassId">Delete</a>*@
-                    <form method="post" asp-page-handler="AddToCart" asp-route-productId="@item.ClassId">
+         @*           <form method="post" asp-page-handler="AddToCart" asp-route-productId="@item.ClassId">
                         <button type="submit" class="add-to-cart">Pay and Enroll</button>
-                    </form>
+                    </form>*@
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+@if (ViewData["success"] != null)
+{
+    <script>
+        alert("@ViewData["success"]");
+    </script>
+}
 

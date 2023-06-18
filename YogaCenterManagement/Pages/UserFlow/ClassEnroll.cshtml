@@ -1,0 +1,115 @@
+﻿@page
+@model YogaCenterManagement.Pages.UserFlow.ClassEnrollModel
+
+@{
+    ViewData["Title"] = "ClassEnroll";
+}
+
+<h1>Class payment and enroll</h1>
+
+@if (Model.Class != null)
+{
+    <div>
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Class.ClassName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Class.ClassName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Class.StartTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Class.StartTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Class.EndTime)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Class.EndTime)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Class.Capacity)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Class.Capacity)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Class.MoneyNeedToPay)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Class.MoneyNeedToPay)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Class.Instructor)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Class.Instructor.InstructorId)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Class.Room)
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.Class.Room != null)
+                {
+                    @Html.DisplayFor(model => model.Class.Room.RoomName)
+                }
+            </dd>
+        </dl>
+    </div>
+}
+
+<div>
+    <a asp-page="HomePage">Back to List</a>
+</div>
+<div class="mt-3">
+    <form id="paymentForm" asp-page-handler="PayAndEnroll" method="post">
+        <input type="hidden" name="classId" value="@Model.Class.ClassId" />
+        <button type="button" class="btn btn-primary" id="openPaymentModal">Pay and Enroll</button>
+    </form>
+
+</div>
+
+<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Payment Amount</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <label for="amountInput">Amount:</label>
+                <input type="number" class="form-control" id="amountInput" placeholder="Enter amount" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="acceptPayment">Accept</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelPayment">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.5.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    $(function () {
+        $("#openPaymentModal").click(function () {
+            $("#paymentModal").modal("show");
+        });
+
+        $("#acceptPayment").click(function () {
+            var amount = $("#amountInput").val();
+            $("#paymentForm").append('<input type="hidden" name="amount" value="' + amount + '" />');
+            $("#paymentForm").submit();
+        });
+
+        $("#cancelPayment").click(function () {
+            $("#amountInput").val("");
+            $("#paymentModal").modal("hide");
+        });
+    });
+</script>
+
