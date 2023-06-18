@@ -15,12 +15,18 @@ namespace YogaCenterManagement.Pages.UserFlow
         private readonly ClassService classService;
         private readonly InstructorService instructorService;
         private readonly RoomService roomService;
+        private readonly MemberService memberService;
+        private readonly PaymentService paymentService;
+        private readonly EnrollmentService enrollmentService;
 
-        public ClassEnrollModel(ClassService classService, InstructorService instructorService, RoomService roomService)
+        public ClassEnrollModel(ClassService classService, InstructorService instructorService, RoomService roomService, EnrollmentService enrollmentService, PaymentService paymentService, MemberService memberService)
         {
             this.classService = classService;
             this.instructorService = instructorService;
             this.roomService = roomService;
+            this.enrollmentService = enrollmentService;
+            this.paymentService = paymentService;
+            this.memberService = memberService;
         }
 
         public Class Class { get; set; } = default!;
@@ -45,7 +51,27 @@ namespace YogaCenterManagement.Pages.UserFlow
                 var moneyCheck = classService.GetAll().FirstOrDefault(m => m.MoneyNeedToPay == amount);
                 if (moneyCheck != null)
                 {
-                    ViewData["success"] = "Your payment was successful, and you are now enrolled in the class.";
+                    var emailCheck = HttpContext.Session.GetString("email");
+                    if (emailCheck != null)
+                    {
+                        var memberCheck = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(emailCheck));
+                        Payment pay = new Payment
+                        {
+                            ClassId = classId,
+                            MemberId = memberCheck.MemberId,
+                            Amount = amount,
+                            PaymentDate = DateTime.Now
+                        };
+                        Enrollment enrollment = new Enrollment
+                        {
+                            MemberId = memberCheck.MemberId,
+                            ClassId = classId,
+                            EnrollmentDate = DateTime.Now
+                        };
+                        paymentService.Add(pay);
+                        enrollmentService.Add(enrollment);
+                        ViewData["success"] = "Your payment was successful, and you are now enrolled in the class.";
+                    }
                     return RedirectToPage("HomePage");
                 }
                 else

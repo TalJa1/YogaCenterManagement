@@ -1,0 +1,80 @@
+﻿@page
+@model YogaCenterManagement.Pages.UserFlow.EquipmentPageModel
+
+@{
+    ViewData["Title"] = "EquipmentPage";
+}
+
+<h1>EquipmentPage</h1>
+
+<div class="navigation-links">
+    <a class="link" asp-page="./CartPage">Cart</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipment[0].EquipmentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Equipment[0].Quantity)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Equipment)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EquipmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+                <td>
+                    @*<a asp-page="./Edit" asp-route-id="@item.EquipmentId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.EquipmentId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.EquipmentId">Delete</a>*@
+                    @if (item.Quantity > 0)
+                    {
+                        <form method="post" asp-page-handler="AddToCart" asp-route-equipmentId="@item.EquipmentId">
+                            <input type="hidden" name="equipmentId" value="@item.EquipmentId" />
+                            <button type="submit" class="add-to-cart">Rent</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button class="add-to-cart" disabled>Rent</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<style>
+    .navigation-links {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .link {
+        padding: 10px 20px;
+        background-color: #f2f2f2;
+        color: #333;
+        text-decoration: none;
+        border-radius: 5px;
+    }
+
+        .link:hover {
+            background-color: #ddd;
+        }
+
+        .link:focus {
+            outline: none;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+        }
+
+</style>   

@@ -1,0 +1,172 @@
+﻿@page
+@model YogaCenterManagement.Pages.UserFlow.CartPageModel
+
+@{
+    var index = 0;
+}
+
+<a asp-page="EquipmentPage">Equipment Page</a>
+@if (ViewData["cartNull"] != null)
+{
+    <div class="error-message">
+        <h1>@ViewData["cartNull"]</h1>
+    </div>
+}
+
+@if (ViewData["err"] != null)
+{
+    <h2 style="color: red">@ViewData["err"]</h2>
+}
+<table>
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dictionary in Model.Equip)
+        {
+            foreach (var entry in dictionary)
+            {
+                var key = entry.Key;
+                var i = Model.Equip.IndexOf(dictionary);
+
+                <tr>
+                    <td>@key.EquipmentName</td>
+                    <td>
+                        <div class="quantity-control">
+                            @*<button class="quantity-decrement" data-index="@i">-</button>*@
+                            <input type="number" value="1" readonly class="quantity-input" data-index="@index" />
+                            @*<button class="quantity-increment" data-index="@i">+</button>*@
+                        </div>
+                    </td>
+@*                    <td>$@key.UnitPrice.ToString("F0")</td>
+                    <td class="subtotal">$@key.UnitPrice.ToString("F0")</td>*@
+                    <td>
+                        <form method="post" asp-page-handler="RemoveItem" asp-route-index="@i" asp-route-flowerBouquetId="@key.EquipmentId">
+                            <input type="hidden" name="equipmentId" value="@key.EquipmentId" />
+                            <button type="submit" class="remove-item">Remove</button>
+                        </form>
+
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+
+    <tfoot>
+       @* <tr>
+            <td colspan="3">Total Price:</td>
+            <td id="total-price">$0</td>
+        </tr>*@
+        <tr>
+            <td colspan="4">
+                <form method="post" asp-page-handler="CreateOrder">
+                    @for (var i = 0; i < Model.Equip.Count; i++)
+                    {
+                        var dictionary = Model.Equip[i];
+                        var equipment = dictionary.Keys.FirstOrDefault();
+
+                        <input type="hidden" name="EquipmentId[@i]" value="@equipment.EquipmentId" />
+                        @*<input type="hidden" name="UpdatedQuantity[@i]" id="updated-quantity-@i" value="@quantity" />*@
+                    }
+                    <button type="submit">Request</button>
+                </form>
+
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+<style>
+    .error-message {
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+    }
+
+        .error-message h1 {
+            color: red;
+            font-size: 24px;
+            font-weight: bold;
+        }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.quantity-increment').on('click', function () {
+            var quantityInput = $(this).siblings('.quantity-input');
+            var currentValue = parseInt(quantityInput.val());
+            var maxValue = parseInt(quantityInput.attr('max'));
+
+            if (currentValue < maxValue) {
+                quantityInput.val(currentValue + 1);
+                updateSubtotal(quantityInput);
+                updateTotalPrice();
+                updateHiddenQuantity(quantityInput);
+            }
+        });
+
+        $('.quantity-decrement').on('click', function () {
+            var quantityInput = $(this).siblings('.quantity-input');
+            var currentValue = parseInt(quantityInput.val());
+            var minValue = parseInt(quantityInput.attr('min'));
+
+            if (currentValue > minValue) {
+                quantityInput.val(currentValue - 1);
+                updateSubtotal(quantityInput);
+                updateTotalPrice();
+                updateHiddenQuantity(quantityInput);
+            }
+        });
+
+        $('.quantity-input').on('change', function () {
+            updateSubtotal($(this));
+            updateTotalPrice();
+            updateHiddenQuantity($(this));
+        });
+
+        function updateSubtotal(quantityInput) {
+            var row = quantityInput.closest('tr');
+            var quantity = parseInt(quantityInput.val());
+            var price = parseInt(row.find('td:nth-child(3)').text().replace('$', ''));
+            var subtotal = quantity * price;
+            row.find('.subtotal').text('$' + subtotal.toFixed(2));
+        }
+
+        function updateTotalPrice() {
+            var total = 0;
+            $('.subtotal').each(function () {
+                total += parseFloat($(this).text().replace('$', ''));
+            });
+            $('#total-price').text('$' + total.toFixed(2));
+            $('#total-price-input').val(total.toFixed(2));
+        }
+
+        function updateHiddenQuantity(quantityInput) {
+            var index = quantityInput.closest('tr').index();
+            var updatedQuantity = quantityInput.val();
+            $('#updated-quantity-' + index).val(updatedQuantity);
+        }
+
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+
+            var dialogResult = confirm("Are you sure you want to create the order?");
+
+            if (dialogResult) {
+                $(this).off('submit').submit();
+            } else {
+                return false;
+            }
+        });
+
+        updateTotalPrice();
+    });
+</script>

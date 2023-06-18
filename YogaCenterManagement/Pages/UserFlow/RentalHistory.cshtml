@@ -1,0 +1,68 @@
+﻿@page
+@model YogaCenterManagement.Pages.UserFlow.RentalHistoryModel
+
+@{
+    ViewData["Title"] = "RentalHistory";
+}
+
+<h1>RentalHistory</h1>
+
+@if (Model.EquipmentRental == null)
+{
+    <h2 style="color : red">You have no rental history</h2>
+}
+<p>
+    <a asp-page="HomePage">HomePage</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentRental[0].RentalDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentRental[0].ReturnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentRental[0].IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentRental[0].Equipment)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.EquipmentRental[0].Member)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.EquipmentRental != null)
+        {
+            @foreach (var item in Model.EquipmentRental)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RentalDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReturnDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.IsApproved)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.Member.Address)
+                    </td>*@
+                    <td>
+                        @*<a asp-page="./Edit" asp-route-id="@item.RentalId">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.RentalId">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.RentalId">Delete</a>*@
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

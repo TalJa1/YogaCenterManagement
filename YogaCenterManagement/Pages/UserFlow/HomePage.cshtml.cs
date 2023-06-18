@@ -16,13 +16,15 @@ namespace YogaCenterManagement.Pages.UserFlow
         private readonly InstructorService instructorService;
         private readonly RoomService roomService;
         private readonly EnrollmentService enrollmentService;
+        private readonly MemberService memberService;
 
-        public HomePageModel(ClassService classServive, InstructorService instructorService, RoomService roomService, EnrollmentService enrollmentService)
+        public HomePageModel(ClassService classServive, InstructorService instructorService, RoomService roomService, EnrollmentService enrollmentService, MemberService memberService)
         {
             this.classServive = classServive;
             this.instructorService = instructorService;
             this.roomService = roomService;
             this.enrollmentService = enrollmentService;
+            this.memberService = memberService;
         }
 
         public IList<Class> Class { get;set; } = default!;
@@ -54,9 +56,32 @@ namespace YogaCenterManagement.Pages.UserFlow
             return RedirectToPage("HomePage");
         }
 
-        //public IActionResult OnPostAddToCart(int classId)
-        //{
-        //    return RedirectToPage("ClassEnroll", new { classID = classId });
-        //}
+        public bool IsEnrolled(int classId)
+        {
+            var email = HttpContext.Session.GetString("email");
+            if (email != null)
+            {
+                var memberCheck = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(email));
+                if (memberCheck != null)
+                {
+                    return enrollmentService.GetAll().Any(e => e.MemberId == memberCheck.MemberId && e.ClassId == classId);
+                }
+            }
+            return false;
+        }
+
+        public bool IsEnrolledAll()
+        {
+            var email = HttpContext.Session.GetString("email");
+            if (email != null)
+            {
+                var memberCheck = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(email));
+                if (memberCheck != null)
+                {
+                    return enrollmentService.GetAll().Any(e => e.MemberId == memberCheck.MemberId);
+                }
+            }
+            return false;
+        }
     }
 }

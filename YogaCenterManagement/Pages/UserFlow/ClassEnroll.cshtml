@@ -7,6 +7,11 @@
 
 <h1>Class payment and enroll</h1>
 
+@if (ViewData["fail"] != null)
+{
+    <h3 style="color: red">@ViewData["fail"]</h3>
+}
+
 @if (Model.Class != null)
 {
     <div>

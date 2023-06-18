@@ -29,6 +29,14 @@
         .btn-link:hover {
             color: blue;
         }
+
+    .disabled-link {
+        pointer-events: none; /* Disable click events */
+        color: #999999; /* Change link color to indicate it's disabled */
+        cursor: not-allowed; /* Show not-allowed cursor on hover */
+        text-decoration: none; /* Remove underline */
+    }
+
 </style>
 @if (HttpContext.Session.GetString("email") != null)
 {
@@ -40,7 +48,16 @@
             <button type="submit" class="btn btn-link">Logout</button>
         </form>
         <p class="horizontal-item">
-            <a asp-page="" class="info-link">Info</a>
+            <a asp-page="UserInfoEdit" >UserInfo</a>
+        </p>
+        @if (Model.IsEnrolledAll())
+        {
+            <p class="horizontal-item">
+                <a asp-page="EquipmentPage">Equipment</a>
+            </p>
+        }
+        <p class="horizontal-item">
+            <a asp-page="RentalHistory">Rental history</a>
         </p>
     </div>
 
@@ -102,12 +119,27 @@ else
                     @Html.DisplayFor(modelItem => item.Room.RoomName)
                 </td>
                 <td>
-                    <a asp-page="ClassEnroll" asp-route-id="@item.ClassId">Pay and Enroll</a>
-                @*<a asp-page="./Details" asp-route-id="@item.ClassId">Details</a> |
+                    @if (HttpContext.Session.GetString("email") != null)
+                    {
+                        if (Model.IsEnrolled(item.ClassId))
+                        {
+                            <a>Enrolled</a>
+                        }
+                        else
+                        {
+                            <a asp-page="ClassEnroll" asp-route-id="@item.ClassId">Pay and Enroll</a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-page="ClassEnroll" asp-route-id="@item.ClassId" class="disabled-link">Pay and Enroll</a>
+                    }
+
+                    @*<a asp-page="./Details" asp-route-id="@item.ClassId">Details</a> |
                 <a asp-page="./Delete" asp-route-id="@item.ClassId">Delete</a>*@
-         @*           <form method="post" asp-page-handler="AddToCart" asp-route-productId="@item.ClassId">
-                        <button type="submit" class="add-to-cart">Pay and Enroll</button>
-                    </form>*@
+                    @*           <form method="post" asp-page-handler="AddToCart" asp-route-productId="@item.ClassId">
+                <button type="submit" class="add-to-cart">Pay and Enroll</button>
+                </form>*@
                 </td>
             </tr>
         }
@@ -117,7 +149,21 @@ else
 @if (ViewData["success"] != null)
 {
     <script>
-        alert("@ViewData["success"]");
+        $(function () {
+            var message = "@Html.Raw(ViewData["success"] as string)";
+            alert(message);
+        });
     </script>
 }
+
+@if (ViewData["errSession"] != null)
+{
+    <script>
+        $(function () {
+            var message = "@Html.Raw(ViewData["errSession"] as string)";
+            alert(message);
+        });
+    </script>
+}
+
 
