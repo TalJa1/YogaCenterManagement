@@ -21,6 +21,7 @@ namespace YogaCenterManagement
             services.AddScoped<RoomService>();
             services.AddScoped<SalaryChangeRequestService>();
             services.AddScoped<PaymentService>();
+            services.AddScoped<CartService>();
 
             services.AddSession();
             return services;

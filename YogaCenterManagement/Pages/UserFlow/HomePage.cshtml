@@ -1,0 +1,116 @@
+﻿@page
+@model YogaCenterManagement.Pages.UserFlow.HomePageModel
+
+@{
+    ViewData["Title"] = "HomePage";
+}
+
+<h1>HomePage</h1>
+<style>
+    .horizontal-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .horizontal-item {
+        margin-bottom: 0;
+    }
+
+    .btn-link {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+        .btn-link:hover {
+            color: blue;
+        }
+</style>
+@if (HttpContext.Session.GetString("email") != null)
+{
+    <p>
+        Welcome @HttpContext.Session.GetString("email")
+    </p>
+    <div class="horizontal-container">
+        <form asp-page="/Logout" method="post" id="logoutForm" class="horizontal-item">
+            <button type="submit" class="btn btn-link">Logout</button>
+        </form>
+        <p class="horizontal-item">
+            <a asp-page="" class="info-link">Info</a>
+        </p>
+    </div>
+
+}
+else
+{
+    <p>
+        @*<a asp-page="create">create new</a>*@
+        <a asp-page="LoginPage">Login</a>
+    </p>
+}
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].ClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].MoneyNeedToPay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].Instructor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].Room)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Class)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MoneyNeedToPay) $
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Instructor.InstructorId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.RoomName)
+                </td>
+                <td>
+                    @*<a asp-page="./Edit" asp-route-id="@item.ClassId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ClassId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ClassId">Delete</a>*@
+                    <form method="post" asp-page-handler="AddToCart" asp-route-productId="@item.ClassId">
+                        <button type="submit" class="add-to-cart">Pay and Enroll</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
