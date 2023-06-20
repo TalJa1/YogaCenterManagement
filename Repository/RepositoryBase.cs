@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Repository.Models;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,6 @@ namespace Repository
         {
             _dbSet.Add(item);
             _context.SaveChanges();
-
         }
         public void Delete(T item)
         {
