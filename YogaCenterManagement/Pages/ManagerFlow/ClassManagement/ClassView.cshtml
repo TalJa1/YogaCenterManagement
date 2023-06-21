@@ -1,0 +1,82 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.ClassViewModel
+
+@{
+    ViewData["Title"] = "ClassView";
+}
+
+<h1>Class Management</h1>
+<table class="table table-bordered table-hover">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].ClassId)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].ClassName)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].StartTime)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].EndTime)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].Capacity)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].IsApproved)
+            </th>
+                <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].MoneyNeedToPay)
+            </th>
+                <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].InstructorId)
+            </th>
+                <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].Room.RoomName)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Class)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Capacity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsApproved)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MoneyNeedToPay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InstructorId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.RoomName)
+                </td>
+                <td>
+                    <a asp-page="Create">Create New</a>
+                    <a asp-page="./Edit" asp-route-id="@item.ClassId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ClassId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ClassId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -21,7 +21,7 @@ namespace YogaCenterManagement.Pages
 
         public IList<Class> Class { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public void OnGetAsync()
         {
             if (classService.GetAll() != null)
             {

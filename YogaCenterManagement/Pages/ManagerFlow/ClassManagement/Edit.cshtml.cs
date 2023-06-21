@@ -37,7 +37,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow
             }
 
             var listClass = _classService.GetAll().FirstOrDefault(m => m.ClassId == id);
-            if (listClass == null)
+            if (listClass is null)
             {
                 return NotFound();
             }
@@ -49,7 +49,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow
 
             //_context.Attach(Class).State = EntityState.Modified;
             _classService.Update(Class);
-            return RedirectToPage("./Index");
+            return RedirectToPage("./ClassView");
         }
     }
 }

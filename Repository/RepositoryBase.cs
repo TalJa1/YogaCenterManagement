@@ -4,6 +4,7 @@ using Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,9 +19,14 @@ namespace Repository
             _context = context;
             _dbSet = _context.Set<T>();
         }
-        public List<T> GetAll()
+        public List<T> GetAll(Expression<Func<T, bool>>? expression = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)
         {
-            return _dbSet.ToList();
+            IQueryable<T> query = _dbSet;
+            if (include is not null)
+            {
+                query = include(query);
+            }
+            return query.ToList();
         }
         public void Add(T item)
         {

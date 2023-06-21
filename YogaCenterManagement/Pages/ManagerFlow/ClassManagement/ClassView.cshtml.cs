@@ -5,14 +5,14 @@ using Repository.Models;
 
 namespace YogaCenterManagement.Pages.ManagerFlow
 {
-    public class IndexModel : PageModel
+    public class ClassViewModel : PageModel
     {
         private readonly MemberService _memberService;
         private readonly ClassService _classService;
         private readonly InstructorService _instructorService;
         private readonly RoomService _roomService;
 
-        public IndexModel(MemberService memberService, ClassService classService, InstructorService instructorService, RoomService roomService)
+        public ClassViewModel(MemberService memberService, ClassService classService, InstructorService instructorService, RoomService roomService)
         {
             _memberService = memberService;
             _classService = classService;
@@ -22,11 +22,11 @@ namespace YogaCenterManagement.Pages.ManagerFlow
 
         public IList<Class> Class { get; set; }
 
-        public void OnGetAsync()
+        public void OnGet()
         {
-            if (_classService.GetAll() is not null )
+            if (_classService.GetAll() is not null)
             {
-                    Class = _classService.GetAll().ToList();   
+                Class = _classService.GetAll(include:x=>x.Include(a=>a.Room).Include(b=>b.Instructor)).ToList();
             }
         }
     }

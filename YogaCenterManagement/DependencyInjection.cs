@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Cors.Infrastructure;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Cors.Infrastructure;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Repository.DAO;
 using Repository.Models;
+using YogaCenterManagement.FluentValidation.ClassValidation;
 
 namespace YogaCenterManagement
 {
@@ -22,7 +26,8 @@ namespace YogaCenterManagement
             services.AddScoped<SalaryChangeRequestService>();
             services.AddScoped<PaymentService>();
             services.AddScoped<CartService>();
-
+            //Register FluentValidation
+            services.AddScoped<IValidator<Class>, CreateClassValidation>();
             services.AddSession();
             return services;
         }

@@ -52,7 +52,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow
                 _classService.Delete(Class);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./ClassView");
         }
     }
 }
