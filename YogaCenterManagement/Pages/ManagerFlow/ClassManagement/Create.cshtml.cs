@@ -56,10 +56,16 @@ namespace YogaCenterManagement.Pages.ManagerFlow
                 {
                     ViewData["Fail"] = "Create Class Fail, Please Try Again!!!";
                     rs.AddToModelState(this.ModelState);
+                }
+                if (!ModelState.IsValid)
+                {
+                    ModelState.Remove("Class.InstructorId");
+                    ModelState.Remove("Class.Room.RoomName");
                     return Page();
                 }
-                if (!rs.IsValid || _instructorService.GetAll() is null || Class is null)
+                if (_instructorService.GetAll() is null || Class is null)
                 {
+                    ViewData["Fail"] = "Create Class Fail, Please Try Again!!!";
                     return Page();
                 }
                 _classService.Add(Class);
@@ -67,7 +73,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow
             }
             catch (Exception ex)
             {
-                ViewData["Fail"] = ex.Message;
+                ViewData["Fail"] = "An error occurred: " + ex.Message;
                 return Page();
             }
         }

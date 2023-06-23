@@ -12,13 +12,19 @@
 <div class="row">
     <div class="col-md-4">
         <form method="post">
-            @{
+         @*   @{
                 var Fail = ViewData["Fail"]?.ToString();
             }
             @if (Fail is not null)
             {
                 <div class="alert alert-warning" role="alert">
                     @Fail
+                </div>
+            }*@
+            @if (!string.IsNullOrEmpty(ViewData["Fail"]?.ToString()))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewData["Fail"]
                 </div>
             }
             <div asp-validation-summary="All" class="text-danger"></div>
