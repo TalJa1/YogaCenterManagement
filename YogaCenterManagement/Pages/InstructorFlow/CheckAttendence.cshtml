@@ -1,0 +1,55 @@
+﻿@page
+@model YogaCenterManagement.Pages.InstructorFlow.CheckAttendenceModel
+
+@{
+    ViewData["Title"] = "CheckAttendence";
+}
+
+<h1>CheckAttendence</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Member[0].Member.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Member[0].Member.FullName)
+            </th>
+                
+            <th>Attendence</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Member) {
+        <tr>
+           
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.FullName)
+            </td>
+            <td>
+                    <select asp-for="IsAttendence" class="form-control">
+                        <option value="true">Attendance</option>
+                        <option value="false">Absent</option>
+                    </select>
+
+            </td>
+                <td> | <a asp-page="ViewAttendence" asp-route-classId="@item.MemberId" asp-route-memberId="@item.ClassId">View</a>
+        </tr>
+}
+    
+            
+    </tbody>
+</table>
+<form method="post">
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>

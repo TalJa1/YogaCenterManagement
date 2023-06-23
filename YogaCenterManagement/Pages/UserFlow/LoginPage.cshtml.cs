@@ -21,14 +21,22 @@ namespace YogaCenterManagement.Pages.UserFlow
 
         public IActionResult OnPost()
         {
-            var account = memberService.GetAll().FirstOrDefault(p => p.Email.Equals(Account.Email) && p.Password.Equals(Account.Password) && p.Role.Equals("member"));
+            var account = memberService.GetAll().FirstOrDefault(p => p.Email.Equals(Account.Email) && p.Password.Equals(Account.Password));
             if (account == null)
             {
                 ViewData["Message"] = "You not have permission";
                 return Page();
             }
-            HttpContext.Session.SetString("email", account.Email);
-            return RedirectToPage("HomePage");
+            if (account.Role.Equals("member"))
+            {
+                HttpContext.Session.SetString("email", account.Email);
+                return RedirectToPage("HomePage");
+            }else if (account.Role.Equals("instructor"))
+            {
+                HttpContext.Session.SetString("email", account.Email);
+                return RedirectToPage("../InstructorFlow/ClassList");
+            }
+            return Page();
         }
     }
 }

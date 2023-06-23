@@ -1,0 +1,46 @@
+﻿@page
+@model YogaCenterManagement.Pages.InstructorFlow.ViewAttendenceModel
+
+@{
+    ViewData["Title"] = "ViewAttendence";
+}
+
+<h1>ViewAttendence</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendance[0].AttendanceDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendance[0].IsPresent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendance[0].Class)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Attendance[0].Member)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Attendance) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AttendanceDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPresent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class.ClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.FullName)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
