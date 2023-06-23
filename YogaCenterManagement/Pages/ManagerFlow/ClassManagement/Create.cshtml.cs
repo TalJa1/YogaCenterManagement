@@ -7,6 +7,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.View;
@@ -34,6 +35,14 @@ namespace YogaCenterManagement.Pages.ManagerFlow
 
         public IActionResult OnGet()
         {
+            if (TempData.TryGetValue("Errors", out var errors))
+            {
+                var errorMessages = (string[])errors;
+                foreach (var errorMessage in errorMessages)
+                {
+                    ModelState.AddModelError("", errorMessage);
+                }
+            }
             var listInstructor = _instructorService.GetAll();
             var listRoom = _roomService.GetAll();
             Rooms = new SelectList(listRoom, "RoomId", "RoomName");
@@ -56,12 +65,9 @@ namespace YogaCenterManagement.Pages.ManagerFlow
                 {
                     ViewData["Fail"] = "Create Class Fail, Please Try Again!!!";
                     rs.AddToModelState(this.ModelState);
-                }
-                if (!ModelState.IsValid)
-                {
-                    ModelState.Remove("Class.InstructorId");
-                    ModelState.Remove("Class.Room.RoomName");
-                    return Page();
+                    TempData["Errors"] = rs.Errors.Select(e => e.ErrorMessage).ToArray();
+                    //return Page();
+                    return RedirectToPage("Create");
                 }
                 if (_instructorService.GetAll() is null || Class is null)
                 {
@@ -69,7 +75,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow
                     return Page();
                 }
                 _classService.Add(Class);
-                return RedirectToAction("Create", Class);
+                return RedirectToPage("ClassView");
             }
             catch (Exception ex)
             {
