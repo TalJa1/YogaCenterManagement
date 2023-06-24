@@ -29,27 +29,28 @@ namespace YogaCenterManagement.Pages.InstructorFlow
 
         public IActionResult OnGet()
         {
-            /*
-            var emailCheck = HttpContext.Session.GetString("email");
-            var member = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(emailCheck));
-            if (member == null)
+            var email = HttpContext.Session.GetString("email");
+            var member = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(email));
+            if (member != null)
             {
-                ViewData["errSession"] = "Error occur";
-                return RedirectToPage("HomePage");
-            }
-            return Page();
-            */
-            Class = classService.GetAll();            
-            if (Class != null)
-            {
-                foreach (var c in Class)
+                var instructor = instructorService.GetAll().FirstOrDefault(i => i.MemberId == member.MemberId);
+                if (instructor != null)
                 {
-                    c.Instructor = instructorService.GetAll().FirstOrDefault(i => i.InstructorId == c.InstructorId);
-                    c.Room = roomService.GetAll().FirstOrDefault(r => r.RoomId == c.RoomId);
-                    c.Instructor.Member = memberService.GetAll().FirstOrDefault(m => m.MemberId == c.Instructor.MemberId);
+                    Class = classService.GetAll().Where(c => c.InstructorId == instructor.InstructorId).ToList();
+                    if (Class != null)
+                    {
+                        foreach (var c in Class)
+                        {
+                            c.Instructor = instructorService.GetAll().FirstOrDefault(i => i.InstructorId == c.InstructorId);
+                            c.Room = roomService.GetAll().FirstOrDefault(r => r.RoomId == c.RoomId);
+                            c.Instructor.Member = memberService.GetAll().FirstOrDefault(m => m.MemberId == c.Instructor.MemberId);
+                        }
+                    }
+                    return Page();
                 }
             }
-            return Page();
+
+            return RedirectToPage("../UserFlow/HomePage");
         }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
