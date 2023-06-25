@@ -12,11 +12,10 @@ namespace Repository
 {
     public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
-        private readonly YogaCenterContext _context;
+        private readonly YogaCenterContext _context = new YogaCenterContext();
         private readonly DbSet<T> _dbSet;
-        public RepositoryBase(YogaCenterContext context)
+        public RepositoryBase()
         {
-            _context = context;
             _dbSet = _context.Set<T>();
         }
         public List<T> GetAll(Expression<Func<T, bool>>? expression = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null)

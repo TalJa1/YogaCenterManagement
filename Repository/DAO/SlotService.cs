@@ -7,8 +7,7 @@ using System.Threading.Tasks;
 
 namespace Repository.DAO
 {
-    public class EquipmentRentalService : RepositoryBase<EquipmentRental>
+    public class SlotService: RepositoryBase<Slot>
     {
-
     }
 }

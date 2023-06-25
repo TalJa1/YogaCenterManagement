@@ -9,8 +9,6 @@ namespace Repository.DAO
 {
     public class PaymentService : RepositoryBase<Payment>
     {
-        public PaymentService(YogaCenterContext context) : base(context)
-        {
-        }
+
     }
 }
