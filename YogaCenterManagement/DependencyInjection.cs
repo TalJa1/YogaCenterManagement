@@ -13,7 +13,6 @@ namespace YogaCenterManagement
     {
         public static IServiceCollection ConfigureServices(this IServiceCollection services)
         {
-            services.AddTransient<YogaCenterContext>();
             services.AddScoped<AttendanceService>();
             services.AddScoped<ClassService>();
             services.AddScoped<EnrollmentService>();
@@ -25,6 +24,8 @@ namespace YogaCenterManagement
             services.AddScoped<RoomService>();
             services.AddScoped<SalaryChangeRequestService>();
             services.AddScoped<PaymentService>();
+            services.AddScoped<SlotService>();
+            services.AddScoped<ClassChangeRequestService>();
             services.AddScoped<CartService>();
             //Register FluentValidation
             services.AddScoped<IValidator<Class>, CreateClassValidation>();
