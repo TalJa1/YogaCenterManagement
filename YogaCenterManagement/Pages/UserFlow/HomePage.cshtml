@@ -79,10 +79,19 @@ else
                 @Html.DisplayNameFor(model => model.Class[0].ClassName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Class[0].BeginDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].EndDate)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Class[0].StartTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Class[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].Slot)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Class[0].MoneyNeedToPay)
@@ -104,16 +113,32 @@ else
                     @Html.DisplayFor(modelItem => item.ClassName)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.BeginDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.StartTime)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EndTime)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Slot.SlotName)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.MoneyNeedToPay) $
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Instructor.InstructorId)
+                    @if (item.Instructor != null)
+                    {
+                        <span>@Model.InstructorNames[Model.Class.IndexOf(item)]</span>
+                    }
+                    else
+                    {
+                        <span>Unknown</span>
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Room.RoomName)
