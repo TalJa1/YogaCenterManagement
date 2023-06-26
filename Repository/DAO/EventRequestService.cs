@@ -9,8 +9,6 @@ namespace Repository.DAO
 {
     public class EventRequestService : RepositoryBase<EventRequest>
     {
-        public EventRequestService(YogaCenterContext context) : base(context)
-        {
-        }
+  
     }
 }

@@ -48,12 +48,16 @@
             <button type="submit" class="btn btn-link">Logout</button>
         </form>
         <p class="horizontal-item">
-            <a asp-page="UserInfoEdit" >UserInfo</a>
+            <a asp-page="UserInfoEdit">UserInfo</a>
         </p>
         @if (Model.IsEnrolledAll())
         {
             <p class="horizontal-item">
                 <a asp-page="EquipmentPage">Equipment</a>
+            </p>
+
+            <p class="horizontal-item">
+                <a asp-page="ChangeClassRequestViewPage">Change History</a>
             </p>
         }
         <p class="horizontal-item">
@@ -79,10 +83,19 @@ else
                 @Html.DisplayNameFor(model => model.Class[0].ClassName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Class[0].BeginDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].EndDate)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Class[0].StartTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Class[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].Slot)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Class[0].MoneyNeedToPay)
@@ -104,16 +117,32 @@ else
                     @Html.DisplayFor(modelItem => item.ClassName)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.BeginDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.StartTime)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EndTime)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Slot.SlotName)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.MoneyNeedToPay) $
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Instructor.InstructorId)
+                    @if (item.Instructor != null)
+                    {
+                        <span>@Model.InstructorNames[Model.Class.IndexOf(item)]</span>
+                    }
+                    else
+                    {
+                        <span>Unknown</span>
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Room.RoomName)
@@ -123,7 +152,12 @@ else
                     {
                         if (Model.IsEnrolled(item.ClassId))
                         {
-                            <a>Enrolled</a>
+                            <div>
+                                <a>Enrolled</a>
+                                <p class="horizontal-item">
+                                    <a asp-page="ChangeClassRequestPage" asp-route-classId="@item.ClassId">Change Class</a>
+                                </p>
+                            </div>
                         }
                         else
                         {

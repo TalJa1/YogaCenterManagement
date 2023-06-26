@@ -15,13 +15,13 @@ namespace YogaCenterManagement.FluentValidation.ClassValidation
             RuleFor(model => model.StartTime)
                 .NotEmpty()
                 .WithMessage("Start time is required.")
-                .LessThan(p => DateTime.Now).WithMessage("Start Date can not exceed today");
+                .LessThan(p => (DateTime.Now).TimeOfDay).WithMessage("Start Date can not exceed today");
 
             RuleFor(model => model.EndTime)
                 .NotEmpty()
                 .GreaterThan(model => model.StartTime)
                 .WithMessage("End time must be greater than start time.")
-                .LessThan(p => DateTime.Now).WithMessage("End Date can not exceed today");
+                .LessThan(p => (DateTime.Now).TimeOfDay).WithMessage("End Date can not exceed today");
 
             RuleFor(model => model.Capacity)
                 .GreaterThan(0)
