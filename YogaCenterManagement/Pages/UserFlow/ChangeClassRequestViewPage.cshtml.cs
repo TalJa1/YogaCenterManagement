@@ -36,7 +36,8 @@ namespace YogaCenterManagement.Pages.UserFlow
                 foreach (var item in ClassChangeRequest)
                 {
                     item.Member = memberService.GetAll().FirstOrDefault(m => m.MemberId == item.MemberId);
-                    item.Class = classService.GetAll().FirstOrDefault(m => m.ClassId == item.ClassId);
+                    item.OldClass = classService.GetAll().FirstOrDefault(m => m.ClassId == item.OldClassId);
+                    item.NewClass = classService.GetAll().FirstOrDefault(m => m.ClassId == item.NewClassId);
                 }
             }
             else

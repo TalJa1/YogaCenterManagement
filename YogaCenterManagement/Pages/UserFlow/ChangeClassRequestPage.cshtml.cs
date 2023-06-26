@@ -43,16 +43,16 @@ namespace YogaCenterManagement.Pages.UserFlow
 
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int classId)
         {
             var memberEmail = HttpContext.Session.GetString("email");
             var member = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(memberEmail));
 
             ClassChangeRequest classChangeRequest = new ClassChangeRequest
             {
-                //RequestId = service.GetAll().OrderByDescending(m => m.RequestId).FirstOrDefault().RequestId + 1,
                 MemberId = member.MemberId,
-                ClassId = ClassChangeRequest.ClassId,
+                OldClassId = classId,
+                NewClassId = ClassChangeRequest.NewClassId,
                 RequestDate = DateTime.Now,
                 IsApproved = false
             };

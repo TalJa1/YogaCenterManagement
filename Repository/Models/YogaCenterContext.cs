@@ -123,29 +123,36 @@ namespace Repository.Models
             modelBuilder.Entity<ClassChangeRequest>(entity =>
             {
                 entity.HasKey(e => e.RequestId)
-                    .HasName("PK__ClassCha__18D3B90FD46B5A62");
+                    .HasName("PK__ClassCha__18D3B90F19B007A6");
 
                 entity.Property(e => e.RequestId).HasColumnName("request_id");
-
-                entity.Property(e => e.ClassId).HasColumnName("class_id");
 
                 entity.Property(e => e.IsApproved).HasColumnName("is_approved");
 
                 entity.Property(e => e.MemberId).HasColumnName("member_id");
 
+                entity.Property(e => e.NewClassId).HasColumnName("new_class_id");
+
+                entity.Property(e => e.OldClassId).HasColumnName("old_class_id");
+
                 entity.Property(e => e.RequestDate)
                     .HasColumnType("date")
                     .HasColumnName("request_date");
-
-                entity.HasOne(d => d.Class)
-                    .WithMany(p => p.ClassChangeRequests)
-                    .HasForeignKey(d => d.ClassId)
-                    .HasConstraintName("FK__ClassChan__class__73BA3083");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.ClassChangeRequests)
                     .HasForeignKey(d => d.MemberId)
                     .HasConstraintName("FK__ClassChan__membe__72C60C4A");
+
+                entity.HasOne(d => d.NewClass)
+                    .WithMany(p => p.ClassChangeRequestNewClasses)
+                    .HasForeignKey(d => d.NewClassId)
+                    .HasConstraintName("FK__ClassChan__new_c__74AE54BC");
+
+                entity.HasOne(d => d.OldClass)
+                    .WithMany(p => p.ClassChangeRequestOldClasses)
+                    .HasForeignKey(d => d.OldClassId)
+                    .HasConstraintName("FK__ClassChan__old_c__73BA3083");
             });
 
             modelBuilder.Entity<Enrollment>(entity =>
@@ -186,7 +193,7 @@ namespace Repository.Models
             modelBuilder.Entity<EquipmentRental>(entity =>
             {
                 entity.HasKey(e => e.RentalId)
-                    .HasName("PK__Equipmen__67DB611BA68ED66B");
+                    .HasName("PK__Equipmen__67DB611B68BF6DE9");
 
                 entity.Property(e => e.RentalId).HasColumnName("rental_id");
 
@@ -220,7 +227,7 @@ namespace Repository.Models
             modelBuilder.Entity<EventRequest>(entity =>
             {
                 entity.HasKey(e => e.RequestId)
-                    .HasName("PK__EventReq__18D3B90F01A52B35");
+                    .HasName("PK__EventReq__18D3B90FB65E8104");
 
                 entity.Property(e => e.RequestId).HasColumnName("request_id");
 
@@ -351,7 +358,7 @@ namespace Repository.Models
             modelBuilder.Entity<SalaryChangeRequest>(entity =>
             {
                 entity.HasKey(e => e.RequestId)
-                    .HasName("PK__SalaryCh__18D3B90F8441A56C");
+                    .HasName("PK__SalaryCh__18D3B90F485CA05D");
 
                 entity.Property(e => e.RequestId).HasColumnName("request_id");
 

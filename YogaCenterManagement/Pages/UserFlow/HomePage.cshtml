@@ -48,16 +48,14 @@
             <button type="submit" class="btn btn-link">Logout</button>
         </form>
         <p class="horizontal-item">
-            <a asp-page="UserInfoEdit" >UserInfo</a>
+            <a asp-page="UserInfoEdit">UserInfo</a>
         </p>
         @if (Model.IsEnrolledAll())
         {
             <p class="horizontal-item">
                 <a asp-page="EquipmentPage">Equipment</a>
             </p>
-            <p class="horizontal-item">
-                <a asp-page="ChangeClassRequestPage">Change Class</a>
-            </p>
+
             <p class="horizontal-item">
                 <a asp-page="ChangeClassRequestViewPage">Change History</a>
             </p>
@@ -154,7 +152,12 @@ else
                     {
                         if (Model.IsEnrolled(item.ClassId))
                         {
-                            <a>Enrolled</a>
+                            <div>
+                                <a>Enrolled</a>
+                                <p class="horizontal-item">
+                                    <a asp-page="ChangeClassRequestPage" asp-route-classId="@item.ClassId">Change Class</a>
+                                </p>
+                            </div>
                         }
                         else
                         {

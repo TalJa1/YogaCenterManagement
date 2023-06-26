@@ -22,31 +22,38 @@
                 @Html.DisplayNameFor(model => model.ClassChangeRequest[0].IsApproved)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ClassChangeRequest[0].Class)
+                @Html.DisplayNameFor(model => model.ClassChangeRequest[0].OldClass)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassChangeRequest[0].NewClass)
             </th>
 
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.ClassChangeRequest) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.RequestDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsApproved)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class.ClassName)
-            </td>
+        @foreach (var item in Model.ClassChangeRequest)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsApproved)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OldClass.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewClass.ClassName)
+                </td>
 
-@*            <td>
-                <a asp-page="./Edit" asp-route-id="@item.RequestId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.RequestId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.RequestId">Delete</a>
+                @*            <td>
+            <a asp-page="./Edit" asp-route-id="@item.RequestId">Edit</a> |
+            <a asp-page="./Details" asp-route-id="@item.RequestId">Details</a> |
+            <a asp-page="./Delete" asp-route-id="@item.RequestId">Delete</a>
             </td>*@
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>

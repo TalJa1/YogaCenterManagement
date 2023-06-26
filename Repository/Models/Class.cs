@@ -8,7 +8,8 @@ namespace Repository.Models
         public Class()
         {
             Attendances = new HashSet<Attendance>();
-            ClassChangeRequests = new HashSet<ClassChangeRequest>();
+            ClassChangeRequestNewClasses = new HashSet<ClassChangeRequest>();
+            ClassChangeRequestOldClasses = new HashSet<ClassChangeRequest>();
             Enrollments = new HashSet<Enrollment>();
             EventRequests = new HashSet<EventRequest>();
             Payments = new HashSet<Payment>();
@@ -31,7 +32,8 @@ namespace Repository.Models
         public virtual Room? Room { get; set; }
         public virtual Slot Slot { get; set; } = null!;
         public virtual ICollection<Attendance> Attendances { get; set; }
-        public virtual ICollection<ClassChangeRequest> ClassChangeRequests { get; set; }
+        public virtual ICollection<ClassChangeRequest> ClassChangeRequestNewClasses { get; set; }
+        public virtual ICollection<ClassChangeRequest> ClassChangeRequestOldClasses { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
         public virtual ICollection<EventRequest> EventRequests { get; set; }
         public virtual ICollection<Payment> Payments { get; set; }

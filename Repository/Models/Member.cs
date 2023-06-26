@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Repository.Models
 {
@@ -19,11 +18,9 @@ namespace Repository.Models
         public int MemberId { get; set; }
         public string Username { get; set; } = null!;
         public string Password { get; set; } = null!;
-        [EmailAddress(ErrorMessage = "Invalid email format.")]
         public string Email { get; set; } = null!;
         public string Role { get; set; } = null!;
         public string FullName { get; set; } = null!;
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be a 10-digit number.")]
         public string Phone { get; set; } = null!;
         public string Address { get; set; } = null!;
 
