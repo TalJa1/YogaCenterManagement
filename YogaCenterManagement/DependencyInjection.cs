@@ -1,7 +1,4 @@
 ﻿using FluentValidation;
-using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.EntityFrameworkCore;
 using Repository.DAO;
 using Repository.Models;
 using YogaCenterManagement.FluentValidation.ClassValidation;
