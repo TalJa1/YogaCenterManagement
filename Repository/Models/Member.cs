@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Repository.Models
 {
@@ -9,6 +8,7 @@ namespace Repository.Models
         public Member()
         {
             Attendances = new HashSet<Attendance>();
+            ClassChangeRequests = new HashSet<ClassChangeRequest>();
             Enrollments = new HashSet<Enrollment>();
             EquipmentRentals = new HashSet<EquipmentRental>();
             Instructors = new HashSet<Instructor>();
@@ -16,30 +16,16 @@ namespace Repository.Models
         }
 
         public int MemberId { get; set; }
-        [Required(ErrorMessage = "Username is required.")]
-        public string Username { get; set; }
-
-        [Required(ErrorMessage = "Password is required.")]
-        public string Password { get; set; }
-
-        [Required(ErrorMessage = "Email is required.")]
-        [EmailAddress(ErrorMessage = "Invalid email format.")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "Role is required.")]
-        public string Role { get; set; }
-
-        [Required(ErrorMessage = "FullName is required.")]
-        public string FullName { get; set; }
-
-        [Required(ErrorMessage = "Phone is required.")]
-        [Phone(ErrorMessage = "Invalid phone number format.")]
-        public string Phone { get; set; }
-
-        [Required(ErrorMessage = "Address is required.")]
-        public string Address { get; set; }
+        public string Username { get; set; } = null!;
+        public string Password { get; set; } = null!;
+        public string Email { get; set; } = null!;
+        public string Role { get; set; } = null!;
+        public string FullName { get; set; } = null!;
+        public string Phone { get; set; } = null!;
+        public string Address { get; set; } = null!;
 
         public virtual ICollection<Attendance> Attendances { get; set; }
+        public virtual ICollection<ClassChangeRequest> ClassChangeRequests { get; set; }
         public virtual ICollection<Enrollment> Enrollments { get; set; }
         public virtual ICollection<EquipmentRental> EquipmentRentals { get; set; }
         public virtual ICollection<Instructor> Instructors { get; set; }

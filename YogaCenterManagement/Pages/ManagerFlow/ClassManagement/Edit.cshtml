@@ -1,0 +1,70 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Class</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Class.ClassId" />
+            <div class="form-group">
+                <label asp-for="Class.ClassName" class="control-label"></label>
+                <input asp-for="Class.ClassName" class="form-control" />
+                <span asp-validation-for="Class.ClassName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.InstructorId" class="control-label"></label>
+                <select asp-for="Class.InstructorId" class="form-control" asp-items="ViewBag.InstructorId"></select>
+                <span asp-validation-for="Class.InstructorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.RoomId" class="control-label"></label>
+                <select asp-for="Class.RoomId" class="form-control" asp-items="ViewBag.RoomId"></select>
+                <span asp-validation-for="Class.RoomId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.StartTime" class="control-label"></label>
+                <input asp-for="Class.StartTime" class="form-control" />
+                <span asp-validation-for="Class.StartTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.EndTime" class="control-label"></label>
+                <input asp-for="Class.EndTime" class="form-control" />
+                <span asp-validation-for="Class.EndTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.Capacity" class="control-label"></label>
+                <input asp-for="Class.Capacity" class="form-control" />
+                <span asp-validation-for="Class.Capacity" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Class.IsApproved" /> @Html.DisplayNameFor(model => model.Class.IsApproved)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="Class.MoneyNeedToPay" class="control-label"></label>
+                <input asp-for="Class.MoneyNeedToPay" class="form-control" />
+                <span asp-validation-for="Class.MoneyNeedToPay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

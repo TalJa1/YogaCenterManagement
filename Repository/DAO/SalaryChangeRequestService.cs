@@ -9,8 +9,6 @@ namespace Repository.DAO
 {
     public class SalaryChangeRequestService : RepositoryBase<SalaryChangeRequest>
     {
-        public SalaryChangeRequestService(YogaCenterContext context) : base(context)
-        {
-        }
+
     }
 }

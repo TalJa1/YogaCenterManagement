@@ -71,7 +71,7 @@ namespace YogaCenterManagement.Pages.UserFlow
                             EquipmentId = equipmentId,
                             RentalDate = DateTime.Now,
                             ReturnDate = DateTime.Now.AddDays(1),
-                            IsApproved = false
+                            Isapprove = false
                         };
                         equipmentRentalService.Add(equipmentRental);
                     }

@@ -9,8 +9,6 @@ namespace Repository.DAO
 {
     public class InstructorService : RepositoryBase<Instructor>
     {
-        public InstructorService(YogaCenterContext context) : base(context)
-        {
-        }
+
     }
 }

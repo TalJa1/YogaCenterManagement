@@ -9,8 +9,8 @@ namespace Repository.Models
         public int? InstructorId { get; set; }
         public int? ClassId { get; set; }
         public string EventName { get; set; } = null!;
-        public DateTime EventDate { get; set; }
         public bool IsApproved { get; set; }
+        public string EventDescription { get; set; } = null!;
 
         public virtual Class? Class { get; set; }
         public virtual Instructor? Instructor { get; set; }
