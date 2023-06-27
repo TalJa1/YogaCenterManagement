@@ -10,7 +10,7 @@
     Welcome @HttpContext.Session.GetString("email")
 </p>
 <p>
-    <a asp-page="CreateEvent">Create New Event</a> | 
+    <a asp-page="EventList">Event</a> | 
     <a asp-page="SalaryPage">Salary</a> |
     <a asp-page="InstructorInforEdit">Edit Info</a>
 </p>
@@ -75,7 +75,12 @@
                 @Html.DisplayFor(modelItem => item.Room.RoomName)
             </td>
             <td>
-                <a asp-page="./CheckAttendence" asp-route-id="@item.ClassId">Check</a> 
+                    <form method="post">
+                        <div class="form-group">
+                            <input type="hidden" name="classId" value="@item.ClassId" />
+                            <input type="submit" value="Check" class="btn btn-primary" />
+                        </div>
+                    </form>
             </td>
         </tr>
 }

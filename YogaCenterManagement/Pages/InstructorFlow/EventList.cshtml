@@ -1,0 +1,49 @@
+﻿@page
+@model YogaCenterManagement.Pages.InstructorFlow.EventListModel
+
+@{
+    ViewData["Title"] = "EventList";
+}
+
+<h1>EventList</h1>
+
+<p>
+    <a asp-page="CreateEvent">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EventRequest[0].EventName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventRequest[0].EventDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventRequest[0].Class)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventRequest[0].Instructor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.EventRequest) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class.ClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instructor.Member.FullName)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

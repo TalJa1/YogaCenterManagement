@@ -54,9 +54,13 @@ namespace YogaCenterManagement.Pages.InstructorFlow
         }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int classId)
         {
-
+            if(classId != null)
+            {
+                HttpContext.Session.SetInt32("ClassId", classId);
+                return RedirectToPage("CheckAttendence");
+            }
 
             return Page();
         }

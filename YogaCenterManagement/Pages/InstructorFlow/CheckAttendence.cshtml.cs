@@ -31,9 +31,10 @@ namespace YogaCenterManagement.Pages.InstructorFlow
         public bool IsAttendence { get; set; }
         
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync()
         {
             var email = HttpContext.Session.GetString("email");
+            var id = HttpContext.Session.GetInt32("ClassId");
             var member = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(email));
             if (member != null)
             {
@@ -54,26 +55,26 @@ namespace YogaCenterManagement.Pages.InstructorFlow
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPost(int memberId, bool isAttendence)
         {
-            foreach(var member in Member)
-            {
-                var attendence = new Attendance();
-                attendence.AttendanceDate = DateTime.Now;
-                attendence.MemberId = member.MemberId;
-                attendence.ClassId = id;
 
-                if (IsAttendence)
-                {
-                    attendence.IsPresent = true;
-                }
-                else 
-                {
-                    attendence.IsPresent = false;
-                }
-                attendanceService.Add(attendence);
+
+            var attendence = new Attendance();
+            attendence.AttendanceDate = DateTime.Now;
+            attendence.MemberId = memberId;
+            attendence.ClassId = HttpContext.Session.GetInt32("ClassId");
+
+            if (isAttendence)
+            {
+                attendence.IsPresent = true;
             }
-            return RedirectToPage("../InstructorFlow/ClassList");
+            else 
+            {
+                attendence.IsPresent = false;
+            }
+            attendanceService.Add(attendence);
+            
+            return RedirectToPage("CheckAttendence");
         }
     }
 }
