@@ -26,7 +26,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow
         {
             if (_classService.GetAll() is not null)
             {
-                Class = _classService.GetAll(include:x=>x.Include(a=>a.Room).Include(b=>b.Instructor)).ToList();
+                Class = _classService.GetAll(include:x=>x.Include(a=>a.Room).Include(b=>b.Instructor).ThenInclude(d=>d.Member).Include(c=>c.Slot)).ToList();
             }
         }
     }

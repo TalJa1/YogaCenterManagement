@@ -1,9 +1,11 @@
 ﻿using FluentValidation;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Repository.Models;
+using Repository.ViewModels;
 
 namespace YogaCenterManagement.FluentValidation.ClassValidation
 {
-    public class CreateClassValidation : AbstractValidator<Class>
+    public class CreateClassValidation : AbstractValidator<CreateClassViewModel>
     {
         public CreateClassValidation()
         {
@@ -11,16 +13,15 @@ namespace YogaCenterManagement.FluentValidation.ClassValidation
                .NotEmpty()
                .WithMessage("Class name is required.");
 
-            RuleFor(model => model.StartTime)
-                .NotEmpty()
-                .WithMessage("Start time is required.")
-                .LessThan(p => (DateTime.Now).TimeOfDay).WithMessage("Start Date can not exceed today");
+            RuleFor(model => model.BeginDate)
+               .NotEmpty()
+               .WithMessage("Begin Date is required.");
 
-            RuleFor(model => model.EndTime)
-                .NotEmpty()
-                .GreaterThan(model => model.StartTime)
-                .WithMessage("End time must be greater than start time.")
-                .LessThan(p => (DateTime.Now).TimeOfDay).WithMessage("End Date can not exceed today");
+            RuleFor(model => model.EndDate)
+               .NotEmpty()
+               .WithMessage("End Date is required.")
+               .Must((model, endDate) => endDate > model.BeginDate)
+               .WithMessage("End Date must be greater than Begin Date.");
 
             RuleFor(model => model.Capacity)
                 .GreaterThan(0)

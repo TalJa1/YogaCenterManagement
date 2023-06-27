@@ -1,0 +1,67 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.SalaryRequestChange.SalaryChangeRequestModel
+
+@{
+    ViewData["Title"] = "SalaryChangeRequest";
+}
+
+<h1>SalaryChangeRequest</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].NewSalary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].RequestDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].Instructor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SalaryChangeRequest)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewSalary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDate)
+                </td>
+                <td>
+                   @if (item.IsApproved == true)
+                    {
+                        <span>Accepted</span>
+                    }
+                    else if (item.IsApproved == false)
+                    {
+                        <span>Rejected</span>
+                    }
+                    else
+                    {
+                        <span>Pending</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Instructor.Member.FullName)
+                </td>
+                <td>
+                    <a asp-page="./UpdateSalaryRequest" asp-route-id="@item.RequestId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.RequestId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.RequestId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

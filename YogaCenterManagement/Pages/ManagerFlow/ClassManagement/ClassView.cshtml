@@ -16,25 +16,28 @@
                 @Html.DisplayNameFor(model => model.Class[0].ClassName)
             </th>
             <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].BeginDate)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].EndDate)
+            </th>
+            <th scope="col">
                 @Html.DisplayNameFor(model => model.Class[0].StartTime)
             </th>
             <th scope="col">
                 @Html.DisplayNameFor(model => model.Class[0].EndTime)
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.Class[0].Capacity)
+                @Html.DisplayNameFor(model => model.Class[0].Slot.SlotName)
             </th>
             <th scope="col">
-                @Html.DisplayNameFor(model => model.Class[0].IsApproved)
-            </th>
-                <th scope="col">
                 @Html.DisplayNameFor(model => model.Class[0].MoneyNeedToPay)
             </th>
-                <th scope="col">
-                @Html.DisplayNameFor(model => model.Class[0].InstructorId)
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].Instructor)
             </th>
-                <th scope="col">
-                @Html.DisplayNameFor(model => model.Class[0].Room.RoomName)
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Class[0].Room)
             </th>
             <th></th>
         </tr>
@@ -50,22 +53,25 @@
                     @Html.DisplayFor(modelItem => item.ClassName)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.BeginDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.StartTime)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EndTime)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Capacity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsApproved)
-                </td>
+                <th>
+                    @Html.DisplayFor(modelItem => item.Slot.SlotName)
+                </th>
                 <td>
                     @Html.DisplayFor(modelItem => item.MoneyNeedToPay)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.InstructorId)
+                    @Html.DisplayFor(modelItem => item.Instructor.Member.FullName)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Room.RoomName)

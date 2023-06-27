@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository.DAO;
 using Repository.Models;
 
-namespace YogaCenterManagement.Pages.ManagerFlow
+namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentManagement
 {
     public class DetailsModel : PageModel
     {
@@ -16,32 +16,33 @@ namespace YogaCenterManagement.Pages.ManagerFlow
         private readonly ClassService _classService;
         private readonly InstructorService _instructorService;
         private readonly RoomService _roomService;
+        private readonly EquipmentService _equipmentService;
 
-        public DetailsModel(MemberService memberService, ClassService classService, InstructorService instructorService, RoomService roomService)
+        public DetailsModel(MemberService memberService, ClassService classService, InstructorService instructorService, RoomService roomService, EquipmentService equipmentService)
         {
             _memberService = memberService;
             _classService = classService;
             _instructorService = instructorService;
             _roomService = roomService;
+            _equipmentService = equipmentService;
         }
 
-        public Class Class { get; set; } 
+        public Equipment Equipment { get; set; } = default!; 
 
-        public IActionResult OnGet(int? id)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id is null || _classService.GetAll() is null)
+            if (id is null || _equipmentService.GetAll() is null)
             {
                 return NotFound();
             }
-
-            var listClass = _classService.GetAll(include:x=>x.Include(a=>a.Instructor).ThenInclude(b=>b.Member).Include(c=>c.Room).Include(d=>d.Slot)).FirstOrDefault(m => m.ClassId == id);
-            if (listClass is null)
+            var equipment = _equipmentService.GetAll().FirstOrDefault(x=>x.EquipmentId==id);
+            if (equipment is null)
             {
                 return NotFound();
             }
-            else
+            else 
             {
-                Class = listClass;
+                Equipment = equipment;
             }
             return Page();
         }

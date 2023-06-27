@@ -1,7 +1,11 @@
 ﻿using FluentValidation;
 using Repository.DAO;
 using Repository.Models;
+using Repository.ViewModels;
 using YogaCenterManagement.FluentValidation.ClassValidation;
+using YogaCenterManagement.FluentValidation.EquipmentValidation;
+using YogaCenterManagement.FluentValidation.SalaryChangeRequestValidation;
+using YogaCenterManagement.Pages.ManagerFlow.SalaryRequestChange;
 
 namespace YogaCenterManagement
 {
@@ -23,8 +27,12 @@ namespace YogaCenterManagement
             services.AddScoped<SlotService>();
             services.AddScoped<ClassChangeRequestService>();
             services.AddScoped<CartService>();
+            services.AddScoped<YogaCenterContext>();
             //Register FluentValidation
-            services.AddScoped<IValidator<Class>, CreateClassValidation>();
+            services.AddScoped<IValidator<CreateClassViewModel>, CreateClassValidation>();
+            services.AddScoped<IValidator<Equipment>, CreateEquipmentValidation>();
+            services.AddScoped<IValidator<UpdateEquipmentViewModels>, UpdateEquipmentValidation>();
+            services.AddScoped<IValidator<SalaryChangeRequest>, CreateSalaryChangeRequestValidation>();
             services.AddSession();
             return services;
         }
