@@ -1,0 +1,86 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.SalaryRequestChange.ChangeRequestModel
+
+@{
+    ViewData["Title"] = "ChangeRequest";
+}
+
+<h1>ChangeRequest</h1>
+
+<h4>SalaryChangeRequest</h4>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].NewSalary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].RequestDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].Instructor)
+            </th>
+            <th>Check </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SalaryChangeRequest)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NewSalary)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RequestDate)
+                </td>
+                <td>
+                    @if (item.IsApproved == true)
+                    {
+                        <span>Accepted</span>
+                    }
+                    else if (item.IsApproved == false)
+                    {
+                        <span>Rejected</span>
+                    }
+                    else
+                    {
+                        <span>Pending</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Instructor.Member.FullName)
+                </td>
+                <td>
+                    <form method="post" asp-page-handler="OnPostAsync">
+                        <div class="form-group">
+                            <input type="hidden" name="requestId" value="@item.RequestId" />
+                            <input type="hidden" name="instructorId" value="@item.InstructorId" />
+                            <select class="form-control" name="isApproved">
+                                <option value="true">Accepted</option>
+                                <option value="false">Rejected</option>
+                            </select>
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                    </form>
+                </td>
+                <td>
+                </td>
+                <td><a asp-page="SalaryChangeRequest" asp-route-instructorId="@item.InstructorId">View</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
