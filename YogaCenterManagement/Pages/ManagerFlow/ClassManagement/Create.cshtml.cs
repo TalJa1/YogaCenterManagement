@@ -152,7 +152,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow
                     StartTime = startTime,
                     EndTime = endTime,
                     Capacity = createClassViewModel.Capacity,
-                    IsApproved = createClassViewModel.IsApproved,
+                    IsApproved = true,
                     SlotId = slot.SlotId,
                     MoneyNeedToPay = createClassViewModel.MoneyNeedToPay,
                 };
