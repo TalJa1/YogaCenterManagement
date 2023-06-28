@@ -4,19 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Repository.DAO;
 using Repository.Models;
 
 namespace YogaCenterManagement.Pages.InstructorFlow
 {
-    public class SalaryPageModel : PageModel
+    public class SalaryHistoryModel : PageModel
     {
         private readonly InstructorService instructorService;
         private readonly MemberService memberService;
         private readonly SalaryChangeRequestService salaryChangeRequestService;
-        public SalaryPageModel(SalaryChangeRequestService salaryChangeRequestService, MemberService memberService, InstructorService instructorService)
+        public SalaryHistoryModel(SalaryChangeRequestService salaryChangeRequestService, MemberService memberService, InstructorService instructorService)
         {
             this.salaryChangeRequestService = salaryChangeRequestService;
             this.memberService = memberService;
@@ -26,7 +25,7 @@ namespace YogaCenterManagement.Pages.InstructorFlow
         public Instructor Instructor { get; set; } = default!;
 
         [BindProperty]
-        public SalaryChangeRequest SalaryChangeRequest { get; set; } = default!;
+        public IList<SalaryChangeRequest> SalaryChangeRequest { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -37,6 +36,7 @@ namespace YogaCenterManagement.Pages.InstructorFlow
                 Instructor = instructorService.GetAll().FirstOrDefault(i => i.MemberId == member.MemberId);
                 if (Instructor != null)
                 {
+                    SalaryChangeRequest = salaryChangeRequestService.GetAll().Where(s => s.InstructorId == Instructor.InstructorId).ToList();
                     return Page();
                 }
             }
@@ -44,17 +44,5 @@ namespace YogaCenterManagement.Pages.InstructorFlow
             return RedirectToPage("../UserFlow/HomePage");
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
-        {
-            SalaryChangeRequest.InstructorId = Instructor.InstructorId;
-            SalaryChangeRequest.RequestDate = DateTime.Now;
-            SalaryChangeRequest.IsApproved = false;
-            salaryChangeRequestService.Add(SalaryChangeRequest);
-            return RedirectToPage("SalaryHistory");
-        }
-
-       
     }
 }
