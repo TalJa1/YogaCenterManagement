@@ -70,22 +70,18 @@
                 <span asp-validation-for="createClassViewModel.EndDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TimeStart" class="control-label"></label>
-                <select class="form-group" asp-for="TimeStart" asp-items="ViewBag.TimeList">
-                    <option selected>
-                        Choose
-                    </option>
-                </select>
-                <span asp-validation-for="TimeStart" class="text-danger"></span>
+                <div class="input-group input-group-static my-3">
+                    <label asp-for="createClassViewModel.StartTime" class="control-label"></label>
+                    <input asp-for="createClassViewModel.StartTime" type="time" class="form-control">
+                    <span asp-validation-for="createClassViewModel.StartTime" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="TimeEnd" class="control-label"></label>
-                <select class="form-group" asp-for="TimeEnd" asp-items="ViewBag.TimeList">
-                    <option selected>
-                        Choose
-                    </option>
-                </select>
-                <span asp-validation-for="TimeEnd" class="text-danger"></span>
+                <div class="input-group input-group-static my-3">
+                    <label asp-for="createClassViewModel.EndTime" class="control-label"></label>
+                    <input asp-for="createClassViewModel.EndTime" type="time" class="form-control">
+                    <span asp-validation-for="createClassViewModel.EndTime" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
                 <label asp-for="createClassViewModel.Capacity" class="control-label"></label>
@@ -115,7 +111,7 @@
     }
 }
 <script type="text/javascript">
-    window.onload = function() {
+    window.onload = function () {
         if ('@TempData["Message"]' != "") {
             $.notify("@TempData["Message"]", { color: "#fff", background: "#20D67B" })
         }

@@ -23,6 +23,16 @@ namespace YogaCenterManagement.FluentValidation.ClassValidation
                .Must((model, endDate) => endDate > model.BeginDate)
                .WithMessage("End Date must be greater than Begin Date.");
 
+            RuleFor(model => model.StartTime)
+            .NotEmpty()
+            .WithMessage("Start Time is required");
+
+            RuleFor(model => model.EndTime)
+            .NotEmpty()
+            .WithMessage("End Time is required")
+            .Must((model, endtime) => endtime > model.StartTime)
+            .WithMessage("End timé must be greater than start time.");
+
             RuleFor(model => model.Capacity)
                 .GreaterThan(0)
                 .WithMessage("Capacity must be greater than 0.");
