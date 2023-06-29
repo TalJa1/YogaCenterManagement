@@ -42,7 +42,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.SalaryRequestChange
                 SalaryChangeRequest = salarychangerequest;
                 _salaryChangeRequestService.Delete(SalaryChangeRequest);
             }
-            return RedirectToPage("./Index");
+            return RedirectToPage("./SalaryChangeRequest");
         }
     }
 }

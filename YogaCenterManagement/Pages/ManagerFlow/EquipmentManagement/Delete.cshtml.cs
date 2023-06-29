@@ -63,7 +63,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentManagement
                 Equipment = equipment;
                 _equipmentService.Delete(Equipment);
             }
-            return RedirectToPage("./Index");
+            return RedirectToPage("./EquipmentView");
         }
     }
 }

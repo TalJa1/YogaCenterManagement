@@ -62,7 +62,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentManagement
             catch (Exception ex)
             {
                 ViewData["Fail"] = "An error occurred: " + ex.Message;
-                return RedirectToPage("./Index");
+                return RedirectToPage("./EquipmentView");
             }
             return Page();
         }
@@ -87,12 +87,12 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentManagement
                     Quantity=UpdateEquipmentViewModels.Quantity
                 };
                 _equipmentService.Update(obj);
-                return RedirectToPage("./Index");
+                return RedirectToPage("./EquipmentView");
             }
             catch (Exception ex)
             {
                 ViewData["Fail"] = "An error occurred: " + ex.Message;
-                return RedirectToPage("./Index");
+                return RedirectToPage("./EquipmentView");
             }
         }
     }

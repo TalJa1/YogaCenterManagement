@@ -33,28 +33,14 @@ namespace Repository.DAO
                     MemberId = 0,
                     Email = email,
                     Username = "Admin",
-                    FullName = "",
+                    FullName = "Admin",
                     Phone = "",
                     Address = "",
+                    Role="Admin",
                     Password = password
                 };
             }
             return Admin;
-        }
-        public IEnumerable<Member> GetAllAccount()
-        {
-            IEnumerable<Member> listMember = null;
-            try
-            {
-                listMember = _context.Members.ToList();
-                Member admin = GetAdminAccount();
-                listMember = listMember.Append(admin);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-            return listMember;
         }
     }
 }

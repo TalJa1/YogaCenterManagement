@@ -48,7 +48,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.SalaryRequestChange
                 return Page();
             }
             _salaryChangeRequestService.Update(SalaryChangeRequest);
-            return RedirectToPage("./Index");
+            return RedirectToPage("./SalaryChangeRequest");
         }
     }
 }

@@ -67,12 +67,12 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentManagement
                     return RedirectToPage("Create");
                 }
                 _equipmentService.Add(Equipment);
-                return RedirectToPage("./Index");
+                return RedirectToPage("./EquipmentView");
             }
             catch (Exception ex)
             {
                 ViewData["Fail"] = "An error occurred: " + ex.Message;
-                return RedirectToPage("./Index");
+                return RedirectToPage("./EquipmentView");
             }
         }
     }

@@ -21,15 +21,14 @@ namespace YogaCenterManagement.Pages.ManagerFlow.SalaryRequestChange
             _salaryChangeRequestService = salaryChangeRequestService;
         }
 
-        public IList<SalaryChangeRequest> SalaryChangeRequest { get;set; }
+        public IList<SalaryChangeRequest> SalaryChangeRequest { get; set; }
 
         public async Task OnGetAsync()
         {
-            if (_salaryChangeRequestService.GetAll() != null)
+            if (_salaryChangeRequestService.GetAll() is not null)
             {
                 SalaryChangeRequest = _salaryChangeRequestService.GetAll(include: x => x.Include(a => a.Instructor).ThenInclude(b => b.Member));
             }
         }
     }
 }
-
