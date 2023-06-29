@@ -38,7 +38,8 @@ namespace YogaCenterManagement.Pages.UserFlow
             }else if (account.Role.Equals("Admin"))
             {
                 HttpContext.Session.SetString("email", account.Email);
-                return RedirectToPage("../ManagerFlow/ClassManagement/ClassView");
+                HttpContext.Session.SetString("isAdmin", account.Role);
+                return RedirectToPage("../ManagerFlow/Dashboard");
             }
             return Page();
         }
