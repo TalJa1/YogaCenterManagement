@@ -45,11 +45,11 @@
                     @Html.DisplayFor(modelItem => item.RequestDate)
                 </td>
                 <td>
-                    @if (item.IsApproved == true)
+                    @if (item.IsApproved is true)
                     {
                         <span>Accepted</span>
                     }
-                    else if (item.IsApproved == false)
+                    else if (item.IsApproved is false)
                     {
                         <span>Rejected</span>
                     }
