@@ -4,6 +4,7 @@ using Repository.Models;
 using Repository.ViewModels;
 using YogaCenterManagement.FluentValidation.ClassValidation;
 using YogaCenterManagement.FluentValidation.EquipmentValidation;
+using YogaCenterManagement.FluentValidation.RoomValidation;
 using YogaCenterManagement.FluentValidation.SalaryChangeRequestValidation;
 using YogaCenterManagement.Pages.ManagerFlow.SalaryRequestChange;
 
@@ -33,6 +34,7 @@ namespace YogaCenterManagement
             services.AddScoped<IValidator<Equipment>, CreateEquipmentValidation>();
             services.AddScoped<IValidator<UpdateEquipmentViewModels>, UpdateEquipmentValidation>();
             services.AddScoped<IValidator<SalaryChangeRequest>, CreateSalaryChangeRequestValidation>();
+            services.AddScoped<IValidator<Room>, CreateRoomValidation>();
             services.AddSession();
             return services;
         }
