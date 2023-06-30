@@ -47,7 +47,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.InstructorManagement
         public async Task<IActionResult> OnPostAsync()
         {
             _instructorService.Update(Instructor);
-            return RedirectToPage("./Index");
+            return RedirectToPage("./InstructorView");
         }
     }
 }

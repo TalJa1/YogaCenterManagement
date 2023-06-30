@@ -10,12 +10,12 @@ using Repository.Models;
 
 namespace YogaCenterManagement.Pages.ManagerFlow.InstructorManagement
 {
-    public class IndexModel : PageModel
+    public class InstructorViewModel : PageModel
     {
         private readonly InstructorService _instructorService;
         private readonly MemberService _memberService;
 
-        public IndexModel(InstructorService instructorService, MemberService memberService)
+        public InstructorViewModel(InstructorService instructorService, MemberService memberService)
         {
             _instructorService = instructorService;
             _memberService = memberService;

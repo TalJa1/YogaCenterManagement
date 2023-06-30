@@ -58,7 +58,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.InstructorManagement
                 _instructorService.Delete(Instructor);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./InstructorView");
         }
     }
 }
