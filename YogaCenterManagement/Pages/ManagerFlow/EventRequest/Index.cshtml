@@ -1,0 +1,63 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.EventRequest.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EventRequest[0].EventName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventRequest[0].IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventRequest[0].EventDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventRequest[0].Class)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EventRequest[0].Instructor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.EventRequest) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventName)
+            </td>
+            <td>
+                    @if (item.IsApproved is true)
+                    {
+                        <span>Accepted</span>
+                    }
+                    else if (item.IsApproved is false)
+                    {
+                        <span>Rejected</span>
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EventDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Class.ClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Instructor.Member.FullName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.RequestId">Approve Event</a> |
+                <a asp-page="./Delete" asp-route-id="@item.RequestId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

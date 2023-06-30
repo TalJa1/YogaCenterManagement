@@ -1,0 +1,58 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.ClassRequestChange.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>ClassChangeRequest</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ClassChangeRequest.RequestId" />
+            <input type="hidden" asp-for="ClassChangeRequest.MemberId" />
+            <input type="hidden" asp-for="ClassChangeRequest.OldClassId" />
+            <input type="hidden" asp-for="ClassChangeRequest.NewClassId" />
+            <input type="hidden" asp-for="ClassChangeRequest.RequestDate" />
+            
+            @*<div class="form-group">
+                <label asp-for="ClassChangeRequest.OldClassId" class="control-label"></label>
+                <select asp-for="ClassChangeRequest.OldClassId" class="form-control" asp-items="ViewBag.OldClassId"></select>
+                <span asp-validation-for="ClassChangeRequest.OldClassId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassChangeRequest.NewClassId" class="control-label"></label>
+                <select asp-for="ClassChangeRequest.NewClassId" class="form-control" asp-items="ViewBag.NewClassId"></select>
+                <span asp-validation-for="ClassChangeRequest.NewClassId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassChangeRequest.RequestDate" class="control-label"></label>
+                <input asp-for="ClassChangeRequest.RequestDate" class="form-control" />
+                <span asp-validation-for="ClassChangeRequest.RequestDate" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="ClassChangeRequest.IsApproved" class="control-label"></label>
+                <select asp-for="ClassChangeRequest.IsApproved" class="form-control">
+                    <option value="true">Accept</option>
+                    <option value="false">Reject</option>
+                </select>
+                <span asp-validation-for="ClassChangeRequest.IsApproved" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

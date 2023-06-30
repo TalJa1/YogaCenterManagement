@@ -1,0 +1,63 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>EquipmentRental</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EquipmentRental.RentalId" />
+            <input type="hidden" asp-for="EquipmentRental.MemberId" />
+            <input type="hidden" asp-for="EquipmentRental.EquipmentId" />
+            <input type="hidden" asp-for="EquipmentRental.RentalDate" />
+            <input type="hidden" asp-for="EquipmentRental.ReturnDate" />
+                
+            @*<div class="form-group">
+                <label asp-for="EquipmentRental.EquipmentId" class="control-label"></label>
+                <select asp-for="EquipmentRental.EquipmentId" class="form-control" asp-items="ViewBag.EquipmentId"></select>
+                <span asp-validation-for="EquipmentRental.EquipmentId" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="EquipmentRental.RentalDate" class="control-label"></label>
+                <input asp-for="EquipmentRental.RentalDate" class="form-control" />
+                <span asp-validation-for="EquipmentRental.RentalDate" class="text-danger"></span>
+            </div>*@
+            @*<div class="form-group">
+                <label asp-for="EquipmentRental.ReturnDate" class="control-label"></label>
+                <input asp-for="EquipmentRental.ReturnDate" class="form-control" />
+                <span asp-validation-for="EquipmentRental.ReturnDate" class="text-danger"></span>
+            </div>*@
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EquipmentRental.IsReturn" /> @Html.DisplayNameFor(model => model.EquipmentRental.IsReturn)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="EquipmentRental.Isapprove" class="control-label"></label>
+                <select asp-for="EquipmentRental.Isapprove" class="form-control">
+                    <option value="true">Accept</option>
+                    <option value="false">Reject</option>
+                   </select>
+                <span asp-validation-for="EquipmentRental.Isapprove" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
