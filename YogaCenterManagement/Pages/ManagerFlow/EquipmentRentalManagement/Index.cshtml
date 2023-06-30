@@ -1,0 +1,76 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentRental[0].RentalDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentRental[0].ReturnDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentRental[0].IsReturn)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentRental[0].Isapprove)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentRental[0].Equipment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EquipmentRental[0].Member)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.EquipmentRental) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentalDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReturnDate)
+            </td>
+            <td>
+                    @if(item.IsReturn is true)
+                    {
+                        <span>Returned</span>
+                    }
+                    else if(item.IsReturn is false)
+                    {
+                        <span>Not Returned</span>
+                    }
+                </td>
+            <td>
+                    @if(item.Isapprove is true)
+                    {
+                        <span>Accepted</span>
+                    }
+                    else if(item.Isapprove is false)
+                    {
+                        <span>Rejected</span>
+                    } 
+                </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.FullName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.RentalId">Change Request</a> |
+                <a asp-page="./Delete" asp-route-id="@item.RentalId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

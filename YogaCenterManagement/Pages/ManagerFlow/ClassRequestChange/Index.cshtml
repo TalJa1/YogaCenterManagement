@@ -1,0 +1,63 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.ClassRequestChange.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>ClassChangeRequest</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassChangeRequest[0].RequestDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassChangeRequest[0].IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassChangeRequest[0].Member)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassChangeRequest[0].NewClass)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassChangeRequest[0].OldClass)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.ClassChangeRequest) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDate)
+            </td>
+            <td>
+                    @if (item.IsApproved is true)
+                    {
+                        <span>Accepted</span>
+                    }
+                    else if (item.IsApproved is false)
+                    {
+                        <span>Rejected</span>
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Member.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewClass.ClassName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OldClass.ClassName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.RequestId">Approve</a> |
+                <a asp-page="./Delete" asp-route-id="@item.RequestId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
