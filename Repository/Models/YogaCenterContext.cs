@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Extensions.Configuration;
 
 namespace Repository.Models
 {
@@ -30,11 +31,18 @@ namespace Repository.Models
         public virtual DbSet<SalaryChangeRequest> SalaryChangeRequests { get; set; } = null!;
         public virtual DbSet<Slot> Slots { get; set; } = null!;
 
+        public string GetConnectionString()
+        {
+            IConfiguration config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appsettings.json", true, true).Build();
+            var strConn = config["ConnectionStrings:YogaManagement"];
+            return strConn;
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=(local);Initial Catalog=YogaCenter;Uid=sa;Pwd=123;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer(GetConnectionString());
             }
         }
 
