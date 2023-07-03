@@ -24,5 +24,10 @@ namespace YogaCenterManagement.Pages
             }
             return Page();
         }
+        public IActionResult OnPost()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToPage("../UserFlow/HomePage");
+        }
     }
 }

@@ -69,8 +69,6 @@ namespace YogaCenterManagement.Pages.ManagerFlow
             }
             return Page();
         }
-        public IList<string> TimeList { get; set; }
-        [BindProperty]
         public CreateClassViewModel createClassViewModel { get; set; }
         [BindProperty]
         public int RoomId { get; set; }
