@@ -27,28 +27,38 @@ namespace YogaCenterManagement.Pages.UserFlow
 
         public IActionResult OnGetAsync()
         {
-            var member = HttpContext.Session.GetString("email");
-            Member me = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(member));
-            var equipmentHistory = equipmentRentalService.GetAll();
-
-            if (equipmentHistory != null)
+            if (HttpContext.Session.GetString("email") == null)
             {
-                foreach (var item in equipmentHistory)
+                return RedirectToPage("HomePage");
+            }
+            if (!HttpContext.Session.GetString("email").Equals("admin@admin.com"))
+            {
+                var member = HttpContext.Session.GetString("email");
+                Member me = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(member));
+                var equipmentHistory = equipmentRentalService.GetAll();
+
+                if (equipmentHistory != null)
                 {
-                    if (item.MemberId == me.MemberId)
+                    foreach (var item in equipmentHistory)
                     {
-                        item.Equipment = equipmentService.GetAll().FirstOrDefault(m => m.EquipmentId == item.EquipmentId);
-                        EquipmentRental.Add(item);
+                        if (item.MemberId == me.MemberId)
+                        {
+                            item.Equipment = equipmentService.GetAll().FirstOrDefault(m => m.EquipmentId == item.EquipmentId);
+                            EquipmentRental.Add(item);
+                        }
                     }
+                    return Page();
                 }
-                return Page();
+                else
+                {
+                    ViewData["null"] = "there are no rental history.";
+                    return Page();
+                }
             }
             else
             {
-                ViewData["null"] = "there are no rental history.";
-                return Page();
+                return NotFound();
             }
-
         }
     }
 }

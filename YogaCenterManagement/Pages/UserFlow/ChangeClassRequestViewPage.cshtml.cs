@@ -27,25 +27,37 @@ namespace YogaCenterManagement.Pages.UserFlow
 
         public IActionResult OnGetAsync()
         {
-            var memberEmail = HttpContext.Session.GetString("email");
-            var member = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(memberEmail));
-            
-            if (classChangeRequestService.GetAll() != null && member != null)
+            if (HttpContext.Session.GetString("email") == null)
             {
-                ClassChangeRequest = classChangeRequestService.GetAll().Where(m => m.MemberId == member.MemberId).ToList();
-                foreach (var item in ClassChangeRequest)
+                return RedirectToPage("HomePage");
+            }
+            if (!HttpContext.Session.GetString("email").Equals("admin@admin.com"))
+            {
+                var memberEmail = HttpContext.Session.GetString("email");
+                var member = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(memberEmail));
+
+                if (classChangeRequestService.GetAll() != null && member != null)
                 {
-                    item.Member = memberService.GetAll().FirstOrDefault(m => m.MemberId == item.MemberId);
-                    item.OldClass = classService.GetAll().FirstOrDefault(m => m.ClassId == item.OldClassId);
-                    item.NewClass = classService.GetAll().FirstOrDefault(m => m.ClassId == item.NewClassId);
+                    ClassChangeRequest = classChangeRequestService.GetAll().Where(m => m.MemberId == member.MemberId).ToList();
+                    foreach (var item in ClassChangeRequest)
+                    {
+                        item.Member = memberService.GetAll().FirstOrDefault(m => m.MemberId == item.MemberId);
+                        item.OldClass = classService.GetAll().FirstOrDefault(m => m.ClassId == item.OldClassId);
+                        item.NewClass = classService.GetAll().FirstOrDefault(m => m.ClassId == item.NewClassId);
+                    }
                 }
+                else
+                {
+                    ViewData["null"] = "No change request";
+                    return RedirectToPage();
+                }
+                return Page();
             }
             else
             {
-                ViewData["null"] = "No change request";
-                return RedirectToPage();
+                return NotFound();
             }
-            return Page();
+
         }
     }
 }

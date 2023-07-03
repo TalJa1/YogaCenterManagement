@@ -33,8 +33,19 @@ namespace YogaCenterManagement.Pages.UserFlow
 
         public IActionResult OnPostAddToCart(int equipmentId)
         {
-            _cartService.AddItemToCart(equipmentId);
-            return RedirectToPage("EquipmentPage");
+            if (HttpContext.Session.GetString("email") == null)
+            {
+                return RedirectToPage("HomePage");
+            }
+            if (!HttpContext.Session.GetString("email").Equals("admin@admin.com"))
+            {
+                _cartService.AddItemToCart(equipmentId);
+                return RedirectToPage("EquipmentPage");
+            }
+            else
+            {
+                return NotFound();
+            }
         }
     }
 }

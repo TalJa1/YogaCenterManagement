@@ -33,58 +33,70 @@ namespace YogaCenterManagement.Pages.UserFlow
 
         public IActionResult OnGet(int? id)
         {
-            var classView = classService.GetAll().FirstOrDefault(m => m.ClassId == id);
-            if (classView != null)
+            if (HttpContext.Session.GetString("email") == null)
             {
-                classView.Room = roomService.GetAll().FirstOrDefault(m => m.RoomId == classView.RoomId);
-                classView.Instructor = instructorService.GetAll().FirstOrDefault(m => m.InstructorId == classView.InstructorId);
-                Class = classView;
+                return RedirectToPage("HomePage");
             }
-            return Page();
-        }
-
-        public IActionResult OnPostPayAndEnroll(int classId)
-        {
-            string amountString = Request.Form["amount"];
-            if (decimal.TryParse(amountString, out decimal amount))
+            if (!HttpContext.Session.GetString("email").Equals("admin@admin.com"))
             {
-                var moneyCheck = classService.GetAll().FirstOrDefault(m => m.MoneyNeedToPay == amount);
-                if (moneyCheck != null)
+                var classView = classService.GetAll().FirstOrDefault(m => m.ClassId == id);
+                if (classView != null)
                 {
-                    var emailCheck = HttpContext.Session.GetString("email");
-                    if (emailCheck != null)
-                    {
-                        var memberCheck = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(emailCheck));
-                        Payment pay = new Payment
-                        {
-                            ClassId = classId,
-                            MemberId = memberCheck.MemberId,
-                            Amount = amount,
-                            PaymentDate = DateTime.Now
-                        };
-                        Enrollment enrollment = new Enrollment
-                        {
-                            MemberId = memberCheck.MemberId,
-                            ClassId = classId,
-                            EnrollmentDate = DateTime.Now
-                        };
-                        paymentService.Add(pay);
-                        enrollmentService.Add(enrollment);
-                        ViewData["success"] = "Your payment was successful, and you are now enrolled in the class.";
-                    }
-                    return RedirectToPage("HomePage");
+                    classView.Room = roomService.GetAll().FirstOrDefault(m => m.RoomId == classView.RoomId);
+                    classView.Instructor = instructorService.GetAll().FirstOrDefault(m => m.InstructorId == classView.InstructorId);
+                    Class = classView;
                 }
-                else
-                {
-                    ViewData["fail"] = "Not enough amounts or overpay, please check again";
-                    return RedirectToPage("ClassEnroll");
-                }
+                return Page();
             }
             else
             {
-                ViewData["fail"] = "Error occur";
-                return RedirectToPage("ClassEnroll");
+                return NotFound();
             }
+        }
+
+        public IActionResult OnPostPayAndEnroll(int classId, decimal amount)
+        {
+            //string amountString = Request.Form["amount"];
+            //if (decimal.TryParse(amountString, out decimal amount))
+            //{
+            //var moneyCheck = classService.GetAll().FirstOrDefault(m => m.MoneyNeedToPay == amount);
+            //if (moneyCheck != null)
+            //{
+            var emailCheck = HttpContext.Session.GetString("email");
+            //var getLastPayment = paymentService.GetAll().OrderByDescending(m => m.PaymentId).FirstOrDefault();
+            if (emailCheck != null)
+            {
+                var memberCheck = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(emailCheck));
+                Payment pay = new Payment
+                {
+                    ClassId = classId,
+                    MemberId = memberCheck.MemberId,
+                    Amount = amount,
+                    PaymentDate = DateTime.Now
+                };
+                Enrollment enrollment = new Enrollment
+                {
+                    MemberId = memberCheck.MemberId,
+                    ClassId = classId,
+                    EnrollmentDate = DateTime.Now
+                };
+                paymentService.Add(pay);
+                enrollmentService.Add(enrollment);
+                ViewData["success"] = "Your payment was successful, and you are now enrolled in the class.";
+            }
+            return RedirectToPage("HomePage");
+            //}
+            //else
+            //{
+            //    ViewData["fail"] = "Not enough amounts or overpay, please check again";
+            //    return RedirectToPage("ClassEnroll");
+            //}
+            //}
+            //else
+            //{
+            //    ViewData["fail"] = "Error occur";
+            //    return RedirectToPage("ClassEnroll");
+            //}
         }
 
 

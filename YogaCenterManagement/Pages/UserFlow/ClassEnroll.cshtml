@@ -68,15 +68,24 @@
 <div>
     <a asp-page="HomePage">Back to List</a>
 </div>
-<div class="mt-3">
+@*<div class="mt-3">
     <form id="paymentForm" asp-page-handler="PayAndEnroll" method="post">
         <input type="hidden" name="classId" value="@Model.Class.ClassId" />
         <button type="button" class="btn btn-primary" id="openPaymentModal">Pay and Enroll</button>
     </form>
+</div>*@
 
+<div class="mt-3">
+    <form id="paymentForm" asp-page-handler="PayAndEnroll" method="post">
+        <input type="hidden" name="classId" value="@Model.Class.ClassId" />
+        <input type="hidden" name="amount" value="@Model.Class.MoneyNeedToPay" />
+        <button type="submit" class="btn btn-primary">Pay and Enroll</button>
+    </form>
 </div>
 
-<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel">
+
+
+@*<div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -95,11 +104,11 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.5.0/js/bootstrap.bundle.min.js"></script>
-<script>
+@*<script>
     $(function () {
         $("#openPaymentModal").click(function () {
             $("#paymentModal").modal("show");
@@ -116,5 +125,5 @@
             $("#paymentModal").modal("hide");
         });
     });
-</script>
+</script>*@
 
