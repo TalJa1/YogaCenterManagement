@@ -22,8 +22,11 @@ namespace Repository.Models
         [RegularExpression(@"^[\w\.-]+@[\w\.-]+\.\w+$", ErrorMessage = "Invalid email format.")]
         public string Email { get; set; } = null!;
         public string Role { get; set; } = null!;
-        public string FullName { get; set; } = null!;
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "Phone number must be 10 digits.")]
         public string Phone { get; set; } = null!;
+
+        [RegularExpression(@"^[^\d]+$", ErrorMessage = "Full name cannot contain numbers.")]
+        public string FullName { get; set; } = null!;
         public string Address { get; set; } = null!;
 
         public virtual ICollection<Attendance> Attendances { get; set; }
