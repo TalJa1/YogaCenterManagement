@@ -46,7 +46,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.MemberManagement
                     return RedirectToPage("Create");
                 }
                 _memberService.Add(Member);
-                return RedirectToPage("./Index");
+                return RedirectToPage("./MemberView");
 
             }catch (Exception ex)
             {

@@ -10,17 +10,17 @@ using Repository.Models;
 
 namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement
 {
-    public class IndexModel : PageModel
+    public class EquipmentRentalModel : PageModel
     {
         private readonly EquipmentRentalService _equipmentRentalService;
         private readonly MemberService _memberService;
-        private readonly EquipmentService _equipmentService; 
+        private readonly EquipmentService _equipmentService;
 
-        public IndexModel(MemberService memberService, EquipmentService equipmentService, EquipmentRentalService equipmentRentalService)
+        public EquipmentRentalModel(EquipmentRentalService equipmentRentalService, MemberService memberService, EquipmentService equipmentService)
         {
+            _equipmentRentalService = equipmentRentalService;
             _memberService = memberService;
             _equipmentService = equipmentService;
-            _equipmentRentalService = equipmentRentalService;
         }
 
         public IList<EquipmentRental> EquipmentRental { get;set; } = default!;

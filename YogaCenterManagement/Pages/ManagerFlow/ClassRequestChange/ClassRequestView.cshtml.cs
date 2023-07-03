@@ -10,13 +10,13 @@ using Repository.Models;
 
 namespace YogaCenterManagement.Pages.ManagerFlow.ClassRequestChange
 {
-    public class IndexModel : PageModel
+    public class ClassRequestViewModel : PageModel
     {
         private readonly ClassChangeRequestService _classChangeRequestService;
         private readonly ClassService _classService;
         private readonly MemberService _memberService;
 
-        public IndexModel(ClassChangeRequestService classChangeRequestService, ClassService classService, MemberService memberService)
+        public ClassRequestViewModel(ClassChangeRequestService classChangeRequestService, ClassService classService, MemberService memberService)
         {
             _classChangeRequestService = classChangeRequestService;
             _classService = classService;

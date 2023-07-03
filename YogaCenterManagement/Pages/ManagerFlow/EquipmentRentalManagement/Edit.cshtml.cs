@@ -55,7 +55,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement
             }
             _equipmentRentalService.Update(EquipmentRental);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./EquipmentRentalView");
         }
     }
 }

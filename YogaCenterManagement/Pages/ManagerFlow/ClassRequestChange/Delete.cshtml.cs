@@ -60,7 +60,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.ClassRequestChange
                 _classChangeRequestService.Delete(classchangerequest);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./ClassRequestView");
         }
     }
 }

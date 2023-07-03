@@ -56,7 +56,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.MemberManagement
                 _memberService.Delete(member);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./MemberView");
         }
     }
 }

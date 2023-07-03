@@ -45,7 +45,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.MemberManagement
         {
            _memberService.Update(Member);
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./MemberView");
         }
 
     }

@@ -60,7 +60,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EventRequest
                 _eventRequestService.Delete(eventrequest);
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./EventRequestView");
         }
     }
 }

@@ -5,13 +5,13 @@ using Repository.Models;
 
 namespace YogaCenterManagement.Pages.ManagerFlow.EventRequest
 {
-    public class IndexModel : PageModel
+    public class EventRequestModel : PageModel
     {
         private readonly EventRequestService _eventRequestService;
         private readonly InstructorService _instructorService;
         private readonly ClassService _classService;
 
-        public IndexModel(EventRequestService eventRequestService, InstructorService instructorService, ClassService classService)
+        public EventRequestModel(EventRequestService eventRequestService, InstructorService instructorService, ClassService classService)
         {
             _eventRequestService = eventRequestService;
             _instructorService = instructorService;
