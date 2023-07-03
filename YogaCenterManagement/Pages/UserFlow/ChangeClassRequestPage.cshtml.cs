@@ -28,14 +28,26 @@ namespace YogaCenterManagement.Pages.UserFlow
 
         public IActionResult OnGet()
         {
-            var memberEmail = HttpContext.Session.GetString("email");
-            var member = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(memberEmail));
+            if (HttpContext.Session.GetString("email") == null)
+            {
+                return RedirectToPage("HomePage");
+            }
+            if (!HttpContext.Session.GetString("email").Equals("admin@admin.com"))
+            {
+                var memberEmail = HttpContext.Session.GetString("email");
+                var member = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(memberEmail));
 
-            var enrolledClassIds = enrollmentService.GetAll().Where(m => m.MemberId == member.MemberId).Select(e => e.ClassId).ToList();
-            var availableClasses = classService.GetAll().Where(c => !enrolledClassIds.Contains(c.ClassId)).ToList();
+                var enrolledClassIds = enrollmentService.GetAll().Where(m => m.MemberId == member.MemberId).Select(e => e.ClassId).ToList();
+                var availableClasses = classService.GetAll().Where(c => !enrolledClassIds.Contains(c.ClassId)).ToList();
 
-            ViewData["ClassId"] = new SelectList(availableClasses, "ClassId", "ClassName");
-            return Page();
+                ViewData["ClassId"] = new SelectList(availableClasses, "ClassId", "ClassName");
+                return Page();
+            }
+            else
+            {
+                return NotFound();
+            }
+
         }
 
         [BindProperty]

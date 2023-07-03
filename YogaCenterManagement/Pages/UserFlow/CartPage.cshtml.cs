@@ -43,7 +43,10 @@ namespace YogaCenterManagement.Pages.UserFlow
                 }
                 return Page();
             }
-            return NotFound();
+            else
+            {
+                return NotFound();
+            }
         }
 
         public IActionResult OnPostRemoveItem(int index, int equipmentId)

@@ -33,14 +33,25 @@ namespace YogaCenterManagement.Pages.UserFlow
 
         public IActionResult OnGet(int? id)
         {
-            var classView = classService.GetAll().FirstOrDefault(m => m.ClassId == id);
-            if (classView != null)
+            if (HttpContext.Session.GetString("email") == null)
             {
-                classView.Room = roomService.GetAll().FirstOrDefault(m => m.RoomId == classView.RoomId);
-                classView.Instructor = instructorService.GetAll().FirstOrDefault(m => m.InstructorId == classView.InstructorId);
-                Class = classView;
+                return RedirectToPage("HomePage");
             }
-            return Page();
+            if (!HttpContext.Session.GetString("email").Equals("admin@admin.com"))
+            {
+                var classView = classService.GetAll().FirstOrDefault(m => m.ClassId == id);
+                if (classView != null)
+                {
+                    classView.Room = roomService.GetAll().FirstOrDefault(m => m.RoomId == classView.RoomId);
+                    classView.Instructor = instructorService.GetAll().FirstOrDefault(m => m.InstructorId == classView.InstructorId);
+                    Class = classView;
+                }
+                return Page();
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
         public IActionResult OnPostPayAndEnroll(int classId, decimal amount)

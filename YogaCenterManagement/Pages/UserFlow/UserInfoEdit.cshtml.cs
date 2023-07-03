@@ -25,15 +25,27 @@ namespace YogaCenterManagement.Pages.UserFlow
 
         public IActionResult OnGet(int? id)
         {
-            var emailCheck = HttpContext.Session.GetString("email");
-            var member = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(emailCheck));
-            if (member == null)
+            if (HttpContext.Session.GetString("email") == null)
             {
-                ViewData["errSession"] = "Error occur";
                 return RedirectToPage("HomePage");
             }
-            Member = member;
-            return Page();
+            if (!HttpContext.Session.GetString("email").Equals("admin@admin.com"))
+            {
+                var emailCheck = HttpContext.Session.GetString("email");
+                var member = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(emailCheck));
+                if (member == null)
+                {
+                    ViewData["errSession"] = "Error occur";
+                    return RedirectToPage("HomePage");
+                }
+                Member = member;
+                return Page();
+            }
+            else
+            {
+                return NotFound();
+            }
+         
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
