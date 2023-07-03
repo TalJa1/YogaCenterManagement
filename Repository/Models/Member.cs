@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Repository.Models
 {
@@ -18,6 +19,7 @@ namespace Repository.Models
         public int MemberId { get; set; }
         public string Username { get; set; } = null!;
         public string Password { get; set; } = null!;
+        [RegularExpression(@"^[\w\.-]+@[\w\.-]+\.\w+$", ErrorMessage = "Invalid email format.")]
         public string Email { get; set; } = null!;
         public string Role { get; set; } = null!;
         public string FullName { get; set; } = null!;
