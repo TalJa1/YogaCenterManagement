@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repository.DAO;
@@ -23,14 +24,22 @@ namespace YogaCenterManagement.Pages.ManagerFlow.ClassRequestChange
             _memberService = memberService;
         }
 
-        public IList<ClassChangeRequest> ClassChangeRequest { get;set; } = default!;
+        public IList<ClassChangeRequest> ClassChangeRequest { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public IActionResult OnGetAsync()
         {
-            if (_classChangeRequestService.GetAll() != null)
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
             {
-                ClassChangeRequest = _classChangeRequestService.GetAll(include: x => x.Include(x =>x.Member).Include(x => x.OldClass).Include(x => x.NewClass)).OrderByDescending(x=>x.RequestDate).ToList();
+                return RedirectToPage("/UserFlow/HomePage");
             }
+            else
+            {
+                if (_classChangeRequestService.GetAll() != null)
+                {
+                    ClassChangeRequest = _classChangeRequestService.GetAll(include: x => x.Include(x => x.Member).Include(x => x.OldClass).Include(x => x.NewClass)).OrderByDescending(x => x.RequestDate).ToList();
+                }
+            }
+            return Page();
         }
     }
 }

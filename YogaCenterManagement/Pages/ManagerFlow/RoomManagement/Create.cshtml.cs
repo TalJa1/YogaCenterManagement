@@ -28,6 +28,10 @@ namespace YogaCenterManagement.Pages.ManagerFlow.RoomManagement
 
         public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
+            {
+                return RedirectToPage("/UserFlow/HomePage");
+            }
             if (!ModelState.IsValid)
             {
                 try

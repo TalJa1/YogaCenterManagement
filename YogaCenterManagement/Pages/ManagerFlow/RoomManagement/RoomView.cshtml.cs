@@ -23,12 +23,21 @@ namespace YogaCenterManagement.Pages.ManagerFlow.RoomManagement
             _memberService = memberService;
         }
 
-        public void OnGetAsync()
+        public IActionResult OnGetAsync()
         {
-            if (_roomService.GetAll() is not null)
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
             {
-                Room =_roomService.GetAll().ToList();
+                return RedirectToPage("/UserFlow/HomePage");
             }
+            else
+            {
+                if (_roomService.GetAll() is not null)
+                {
+                    Room = _roomService.GetAll().ToList();
+                }
+            }
+            return Page();
+           
         }
     }
 }

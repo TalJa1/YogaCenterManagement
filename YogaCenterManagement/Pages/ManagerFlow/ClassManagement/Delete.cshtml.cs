@@ -23,18 +23,24 @@ namespace YogaCenterManagement.Pages.ManagerFlow
 
         public IActionResult OnGet(int? id)
         {
-            if (id == null || _classService.GetAll() == null)
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
             {
-                return NotFound();
+                return RedirectToPage("/UserFlow/HomePage");
             }
-
-            Class = _classService.GetAll().FirstOrDefault(m => m.ClassId == id);
-
-            if (Class == null)
+            else
             {
-                return NotFound();
-            }
+                if (id == null || _classService.GetAll() == null)
+                {
+                    return NotFound();
+                }
 
+                Class = _classService.GetAll().FirstOrDefault(m => m.ClassId == id);
+
+                if (Class == null)
+                {
+                    return NotFound();
+                }
+            }
             return Page();
         }
 

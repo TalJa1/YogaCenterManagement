@@ -23,12 +23,20 @@ namespace YogaCenterManagement.Pages.ManagerFlow.SalaryRequestChange
 
         public IList<SalaryChangeRequest> SalaryChangeRequest { get; set; }
 
-        public async Task OnGetAsync()
+        public IActionResult OnGetAsync()
         {
-            if (_salaryChangeRequestService.GetAll() is not null)
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
             {
-                SalaryChangeRequest = _salaryChangeRequestService.GetAll(include: x => x.Include(a => a.Instructor).ThenInclude(b => b.Member)).OrderByDescending(x=>x.RequestDate).ToList();
+                return RedirectToPage("/UserFlow/HomePage");
             }
+            else
+            {
+                if (_salaryChangeRequestService.GetAll() is not null)
+                {
+                    SalaryChangeRequest = _salaryChangeRequestService.GetAll(include: x => x.Include(a => a.Instructor).ThenInclude(b => b.Member)).OrderByDescending(x => x.RequestDate).ToList();
+                }
+            }
+            return Page();
         }
     }
 }

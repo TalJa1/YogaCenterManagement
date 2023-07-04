@@ -31,20 +31,27 @@ namespace YogaCenterManagement.Pages.ManagerFlow.ClassRequestChange
 
         public IActionResult OnGetAsync(int? id)
         {
-            if (id == null || _classChangeRequestService.GetAll() == null)
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
             {
-                return NotFound();
+                return RedirectToPage("/UserFlow/HomePage");
             }
+            else
+            {
+                if (id == null || _classChangeRequestService.GetAll() == null)
+                {
+                    return NotFound();
+                }
 
-            var classchangerequest = _classChangeRequestService.GetAll().FirstOrDefault(m => m.RequestId == id);
-            if (classchangerequest == null)
-            {
-                return NotFound();
+                var classchangerequest = _classChangeRequestService.GetAll().FirstOrDefault(m => m.RequestId == id);
+                if (classchangerequest == null)
+                {
+                    return NotFound();
+                }
+                ClassChangeRequest = classchangerequest;
+                ViewData["MemberId"] = new SelectList(_memberService.GetAll(), "MemberId", "FullName");
+                ViewData["NewClassId"] = new SelectList(_classService.GetAll(), "ClassId", "ClassName");
+                ViewData["OldClassId"] = new SelectList(_classService.GetAll(), "ClassId", "ClassName");
             }
-            ClassChangeRequest = classchangerequest;
-            ViewData["MemberId"] = new SelectList(_memberService.GetAll(), "MemberId", "FullName");
-            ViewData["NewClassId"] = new SelectList(_classService.GetAll(), "ClassId", "ClassName");
-            ViewData["OldClassId"] = new SelectList(_classService.GetAll(), "ClassId", "ClassName");
             return Page();
         }
 

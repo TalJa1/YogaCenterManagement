@@ -23,15 +23,22 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement
             _equipmentService = equipmentService;
         }
 
-        public IList<EquipmentRental> EquipmentRental { get;set; } = default!;
+        public IList<EquipmentRental> EquipmentRental { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public IActionResult OnGetAsync()
         {
-            if (_equipmentRentalService.GetAll() != null)
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
             {
-                EquipmentRental = _equipmentRentalService.GetAll(include: x => x.Include(x => x.Member).Include(x => x.Equipment)).OrderByDescending(x=>x.ReturnDate).ThenByDescending(x=>x.ReturnDate).ToList();
-                
+                return RedirectToPage("/UserFlow/HomePage");
             }
+            else
+            {
+                if (_equipmentRentalService.GetAll() != null)
+                {
+                    EquipmentRental = _equipmentRentalService.GetAll(include: x => x.Include(x => x.Member).Include(x => x.Equipment)).OrderByDescending(x => x.ReturnDate).ThenByDescending(x => x.ReturnDate).ToList();
+                }
+            }
+            return Page();
         }
     }
 }

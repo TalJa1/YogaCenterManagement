@@ -43,25 +43,32 @@ namespace YogaCenterManagement.Pages.ManagerFlow
         {
             try
             {
-                if (!ModelState.IsValid)
+                if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
                 {
-                    // Add model errors to TempData
-                    TempData["Errors"] = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToArray();
+                    return RedirectToPage("/UserFlow/HomePage");
                 }
-                var listInstructor = _instructorService.GetAll(include: x => x.Include(z => z.Member)).ToList();
-                var listRoom = _roomService.GetAll();
-                var listSlot = _slotService.GetAll();
-                if (instructorId != null)
+                else
                 {
-                    ViewData["Instructor"] = new SelectList(listInstructor, "InstructorId", "Member.FullName", instructorId);
+                    if (!ModelState.IsValid)
+                    {
+                        // Add model errors to TempData
+                        TempData["Errors"] = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToArray();
+                    }
+                    var listInstructor = _instructorService.GetAll(include: x => x.Include(z => z.Member)).ToList();
+                    var listRoom = _roomService.GetAll();
+                    var listSlot = _slotService.GetAll();
+                    if (instructorId != null)
+                    {
+                        ViewData["Instructor"] = new SelectList(listInstructor, "InstructorId", "Member.FullName", instructorId);
+                    }
+                    else ViewData["Instructor"] = new SelectList(listInstructor, "InstructorId", "Member.FullName");
+                    if (roomId != null)
+                    {
+                        ViewData["Room"] = new SelectList(listRoom, "RoomId", "RoomName", roomId);
+                    }
+                    else ViewData["Room"] = new SelectList(listRoom, "RoomId", "RoomName");
+                    ViewData["Slot"] = new SelectList(listSlot, "SlotId", "SlotName", slotId);
                 }
-                else ViewData["Instructor"] = new SelectList(listInstructor, "InstructorId", "Member.FullName");
-                if (roomId != null)
-                {
-                    ViewData["Room"] = new SelectList(listRoom, "RoomId", "RoomName", roomId);
-                }
-                else ViewData["Room"] = new SelectList(listRoom, "RoomId", "RoomName");
-                ViewData["Slot"] = new SelectList(listSlot, "SlotId", "SlotName", slotId);
             }
             catch (Exception ex)
             {

@@ -27,14 +27,19 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentManagement
             _equipmentService = equipmentService;
         }
 
-        public IList<Equipment> Equipment { get;set; } = default!;
+        public IList<Equipment> Equipment { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public IActionResult OnGetAsync()
         {
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
+            {
+                return RedirectToPage("/UserFlow/HomePage");
+            }
             if (_equipmentService.GetAll != null)
             {
                 Equipment = _equipmentService.GetAll().ToList();
             }
+            return Page();
         }
     }
 }

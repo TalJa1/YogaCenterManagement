@@ -35,6 +35,10 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentManagement
 
         public IActionResult OnGet()
         {
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
+            {
+                return RedirectToPage("/UserFlow/HomePage");
+            }
             try
             {
                 if (!ModelState.IsValid)

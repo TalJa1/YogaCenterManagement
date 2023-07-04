@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Repository.DAO;
 using Repository.Models;
@@ -20,12 +21,20 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EventRequest
 
         public IList<Repository.Models.EventRequest> EventRequest { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public IActionResult OnGetAsync()
         {
-            if (_eventRequestService.GetAll() != null)
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
             {
-                EventRequest = _eventRequestService.GetAll(include: x => x.Include(x => x.Instructor).ThenInclude(x => x.Member).Include(x => x.Class)).OrderByDescending(x => x.RequestId).ToList();
+                return RedirectToPage("/UserFlow/HomePage");
             }
+            else
+            {
+                if (_eventRequestService.GetAll() != null)
+                {
+                    EventRequest = _eventRequestService.GetAll(include: x => x.Include(x => x.Instructor).ThenInclude(x => x.Member).Include(x => x.Class)).OrderByDescending(x => x.RequestId).ToList();
+                }
+            }
+            return Page();
         }
     }
 }

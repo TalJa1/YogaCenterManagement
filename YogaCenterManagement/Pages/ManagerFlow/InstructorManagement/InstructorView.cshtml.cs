@@ -23,12 +23,20 @@ namespace YogaCenterManagement.Pages.ManagerFlow.InstructorManagement
 
         public IList<Instructor> Instructor { get; set; } = default!;
 
-        public void OnGetAsync()
+        public IActionResult OnGetAsync()
         {
-            if (_instructorService.GetAll() is not null)
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
             {
-                Instructor = _instructorService.GetAll(include: x => x.Include(a => a.Member)).ToList();
+                return RedirectToPage("/UserFlow/HomePage");
             }
+            else
+            {
+                if (_instructorService.GetAll() is not null)
+                {
+                    Instructor = _instructorService.GetAll(include: x => x.Include(a => a.Member)).ToList();
+                }
+            }
+            return Page();
         }
     }
 }

@@ -19,14 +19,22 @@ namespace YogaCenterManagement.Pages.ManagerFlow.MemberManagement
             _memberService = memberService;
         }
 
-        public IList<Member> Member { get;set; } = default!;
+        public IList<Member> Member { get; set; } = default!;
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            if (_memberService.GetAll() != null)
+            if (HttpContext.Session.GetString("email") == null || !HttpContext.Session.GetString("email").Equals("admin@admin.com"))
             {
-                Member = _memberService.GetAll().ToList();
+                return RedirectToPage("/UserFlow/HomePage");
             }
+            else
+            {
+                if (_memberService.GetAll() != null)
+                {
+                    Member = _memberService.GetAll().ToList();
+                }
+            }
+            return Page();
         }
     }
 }
