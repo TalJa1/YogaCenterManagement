@@ -34,42 +34,49 @@
     <tbody>
         @foreach (var item in Model.EquipmentRental)
         {
-            @if (item.Isapprove is false)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RentalDate)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReturnDate)
-                    </td>
-                    <td>
-                        @if (item.IsReturn is false)
-                        {
-                            <span>Not Returned</span>
-                        }
-                    </td>
-                    <td>
-                        @if (item.Isapprove is false)
-                        {
-                            <span>Rejected</span>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Member.FullName)
-                    </td>
-                    <td>
-                        @if (item.Isapprove is false && item.IsReturn is false)
-                        {
-                            <a asp-page="./Edit" asp-route-id="@item.RentalId">Change Request</a>
-                        }
-                        <a asp-page="./Delete" asp-route-id="@item.RentalId">Delete</a>
-                    </td>
-                </tr>
-            }
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RentalDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReturnDate)
+                </td>
+                <td>
+                    @if (item.IsReturn is false)
+                    {
+                        <span>Not Returned</span>
+                    }
+                    else
+                    {
+                        <span>Returned</span>
+                    }
+                </td>
+                <td>
+                    @if (item.Isapprove is false)
+                    {
+                        <span>Rejected</span>
+                    }
+                    else
+                    {
+                        <span>Approved</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Equipment.EquipmentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Member.FullName)
+                </td>
+                <td>
+                    @if (item.Isapprove is false && item.IsReturn is false)
+                    {
+                        <a asp-page="./Edit" asp-route-id="@item.RentalId">Change Request</a>
+                    }
+                    <a asp-page="./Delete" asp-route-id="@item.RentalId">Delete</a>
+                </td>
+            </tr>
         }
+
     </tbody>
 </table>
