@@ -14,9 +14,6 @@ namespace YogaCenterManagement.FluentValidation.InstructorValidation
                 .WithMessage("Salary is required")
                 .GreaterThan(0)
                 .WithMessage("Salary must greater than 0");
-             RuleFor(x => x.MemberId)
-                .NotEmpty()
-                .WithMessage("Invalid Instructor");
         }
     }
 }

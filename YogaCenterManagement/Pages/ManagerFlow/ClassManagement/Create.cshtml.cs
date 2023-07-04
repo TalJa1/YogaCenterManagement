@@ -54,8 +54,8 @@ namespace YogaCenterManagement.Pages.ManagerFlow
                         // Add model errors to TempData
                         TempData["Errors"] = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToArray();
                     }
-                    var listInstructor = _instructorService.GetAll(include: x => x.Include(z => z.Member)).ToList();
-                    var listRoom = _roomService.GetAll();
+                    var listIns = _classService.GetAll().Select(c => c.InstructorId).Distinct().ToList();
+                    var listInstructor = _instructorService.GetAll(include: x => x.Include(z => z.Member)).Where(i => !listIns.Contains(i.InstructorId)).ToList(); var listRoom = _roomService.GetAll();
                     var listSlot = _slotService.GetAll();
                     if (instructorId != null)
                     {
@@ -76,6 +76,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow
             }
             return Page();
         }
+        [BindProperty]
         public CreateClassViewModel createClassViewModel { get; set; }
         [BindProperty]
         public int RoomId { get; set; }
