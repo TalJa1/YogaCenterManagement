@@ -57,7 +57,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement
             //{
             //    return Page();
             //}
-            var euquipment = _equipmentRentalService.GetAll().FirstOrDefault(x => x.EquipmentId == EquipmentRental.EquipmentId);
+            var euquipment = _equipmentRentalService.GetAll().FirstOrDefault(x => x.RentalId == EquipmentRental.RentalId);
             if (EquipmentRental.Isapprove is true)
             {
                 //foreach (var item in euquipment)

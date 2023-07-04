@@ -69,10 +69,10 @@
                     @Html.DisplayFor(modelItem => item.Member.FullName)
                 </td>
                 <td>
-                    @if (item.Isapprove is false && item.IsReturn is false)
-                    {
-                        <a asp-page="./Edit" asp-route-id="@item.RentalId">Change Request</a>
-                    }
+                    @*  @if (item.Isapprove is false && item.IsReturn is false)
+                {*@
+                    <a asp-page="./Edit" asp-route-id="@item.RentalId">Change Request</a>
+                    @*}*@
                     <a asp-page="./Delete" asp-route-id="@item.RentalId">Delete</a>
                 </td>
             </tr>
