@@ -53,9 +53,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EventRequest
             {
                 return Page();
             }
-
             _eventRequestService.Update(EventRequest);
-
             return RedirectToPage("./EventRequestView");
         }
     }

@@ -53,6 +53,21 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement
             {
                 return Page();
             }
+            var euquipment = _equipmentRentalService.GetAll().Where(x=>x.EquipmentId== EquipmentRental.EquipmentId).ToList();
+            if (EquipmentRental.Isapprove is true)
+            {
+                foreach (var item in euquipment)
+                {
+                    item.IsReturn = false;
+                }
+            }
+            else
+            {
+                foreach (var item in euquipment)
+                {
+                    item.IsReturn = true;
+                }
+            }
             _equipmentRentalService.Update(EquipmentRental);
 
             return RedirectToPage("./EquipmentRentalView");

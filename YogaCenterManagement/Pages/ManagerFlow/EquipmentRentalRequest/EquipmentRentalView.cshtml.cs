@@ -29,7 +29,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement
         {
             if (_equipmentRentalService.GetAll() != null)
             {
-                EquipmentRental = _equipmentRentalService.GetAll(include: x => x.Include(x => x.Member).Include(x => x.Equipment));
+                EquipmentRental = _equipmentRentalService.GetAll(include: x => x.Include(x => x.Member).Include(x => x.Equipment)).OrderByDescending(x=>x.ReturnDate).ThenByDescending(x=>x.ReturnDate).ToList();
                 
             }
         }

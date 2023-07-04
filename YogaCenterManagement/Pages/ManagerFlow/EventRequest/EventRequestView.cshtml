@@ -1,8 +1,8 @@
 ﻿@page
-@model YogaCenterManagement.Pages.ManagerFlow.SalaryRequestChange.SalaryChangeRequestModel
+@model YogaCenterManagement.Pages.ManagerFlow.EventRequest.EventRequestModel
 
 @{
-    ViewData["Title"] = "SalaryChangeRequest";
+    ViewData["Title"] = "EventRequest";
 }
 
 <h1>Index</h1>
@@ -11,43 +11,43 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].RequestId)
+                @Html.DisplayNameFor(model => model.EventRequest[0].EventName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].NewSalary)
+                @Html.DisplayNameFor(model => model.EventRequest[0].IsApproved)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].RequestDate)
+                @Html.DisplayNameFor(model => model.EventRequest[0].EventDescription)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].IsApproved)
+                @Html.DisplayNameFor(model => model.EventRequest[0].Class)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].Instructor)
+                @Html.DisplayNameFor(model => model.EventRequest[0].Instructor)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.SalaryChangeRequest)
+        @foreach (var item in Model.EventRequest)
         {
             @if (item.IsApproved is false)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.RequestId)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NewSalary)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RequestDate)
+                        @Html.DisplayFor(modelItem => item.EventName)
                     </td>
                     <td>
                         @if (item.IsApproved is false)
                         {
                             <span>Rejected</span>
                         }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EventDescription)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Class.ClassName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Instructor.Member.FullName)
@@ -61,7 +61,6 @@
                     </td>
                 </tr>
             }
-
         }
     </tbody>
 </table>

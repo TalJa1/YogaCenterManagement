@@ -18,13 +18,13 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EventRequest
             _classService = classService;
         }
 
-        public IList<Repository.Models.EventRequest> EventRequest { get;set; } = default!;
+        public IList<Repository.Models.EventRequest> EventRequest { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_eventRequestService.GetAll() != null)
             {
-                EventRequest = _eventRequestService.GetAll(include: x => x.Include(x => x.Instructor).ThenInclude(x => x.Member).Include(x => x.Class));
+                EventRequest = _eventRequestService.GetAll(include: x => x.Include(x => x.Instructor).ThenInclude(x => x.Member).Include(x => x.Class)).OrderByDescending(x => x.RequestId).ToList();
             }
         }
     }

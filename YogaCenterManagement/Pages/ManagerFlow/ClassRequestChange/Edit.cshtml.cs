@@ -16,12 +16,14 @@ namespace YogaCenterManagement.Pages.ManagerFlow.ClassRequestChange
         private readonly ClassChangeRequestService _classChangeRequestService;
         private readonly ClassService _classService;
         private readonly MemberService _memberService;
+        private readonly EnrollmentService _enrollmentService;
 
-        public EditModel(ClassChangeRequestService classChangeRequestService, ClassService classService, MemberService memberService)
+        public EditModel(ClassChangeRequestService classChangeRequestService, ClassService classService, MemberService memberService, EnrollmentService enrollmentService)
         {
             _classChangeRequestService = classChangeRequestService;
             _classService = classService;
             _memberService = memberService;
+            _enrollmentService = enrollmentService;
         }
 
         [BindProperty]
@@ -34,15 +36,15 @@ namespace YogaCenterManagement.Pages.ManagerFlow.ClassRequestChange
                 return NotFound();
             }
 
-            var classchangerequest =  _classChangeRequestService.GetAll().FirstOrDefault(m => m.RequestId == id);
+            var classchangerequest = _classChangeRequestService.GetAll().FirstOrDefault(m => m.RequestId == id);
             if (classchangerequest == null)
             {
                 return NotFound();
             }
             ClassChangeRequest = classchangerequest;
-           ViewData["MemberId"] = new SelectList(_memberService.GetAll(), "MemberId", "FullName");
-           ViewData["NewClassId"] = new SelectList(_classService.GetAll(), "ClassId", "ClassName");
-           ViewData["OldClassId"] = new SelectList(_classService.GetAll(), "ClassId", "ClassName");
+            ViewData["MemberId"] = new SelectList(_memberService.GetAll(), "MemberId", "FullName");
+            ViewData["NewClassId"] = new SelectList(_classService.GetAll(), "ClassId", "ClassName");
+            ViewData["OldClassId"] = new SelectList(_classService.GetAll(), "ClassId", "ClassName");
             return Page();
         }
 
@@ -54,9 +56,16 @@ namespace YogaCenterManagement.Pages.ManagerFlow.ClassRequestChange
             {
                 return Page();
             }
-
+            var enrollments = _enrollmentService.GetAll().Where(e => e.ClassId == ClassChangeRequest.OldClassId);
+            if (ClassChangeRequest.IsApproved is true)
+            {
+                foreach (var item in enrollments)
+                {
+                    item.ClassId = ClassChangeRequest.NewClassId;
+                    _enrollmentService.Update(item);
+                }
+            }
             _classChangeRequestService.Update(ClassChangeRequest);
-
             return RedirectToPage("./ClassRequestView");
         }
     }

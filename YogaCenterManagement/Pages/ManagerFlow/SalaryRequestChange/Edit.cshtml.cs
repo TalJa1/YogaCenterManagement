@@ -47,6 +47,15 @@ namespace YogaCenterManagement.Pages.ManagerFlow.SalaryRequestChange
             {
                 return Page();
             }
+            var instructors = _instructorService.GetAll().Where(x=>x.InstructorId==SalaryChangeRequest.InstructorId);
+            if (SalaryChangeRequest.IsApproved is true)
+            {
+                foreach (var item in instructors)
+                {
+                    item.Salary = SalaryChangeRequest.NewSalary;
+                    _instructorService.Update(item);
+                }
+            }
             _salaryChangeRequestService.Update(SalaryChangeRequest);
             return RedirectToPage("./SalaryChangeRequest");
         }

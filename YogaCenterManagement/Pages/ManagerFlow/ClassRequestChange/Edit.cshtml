@@ -19,17 +19,17 @@
             <input type="hidden" asp-for="ClassChangeRequest.NewClassId" />
             <input type="hidden" asp-for="ClassChangeRequest.RequestDate" />
             
-            @*<div class="form-group">
+@*            <div class="form-group">
                 <label asp-for="ClassChangeRequest.OldClassId" class="control-label"></label>
                 <select asp-for="ClassChangeRequest.OldClassId" class="form-control" asp-items="ViewBag.OldClassId"></select>
                 <span asp-validation-for="ClassChangeRequest.OldClassId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            </div>*@
+           @* <div class="form-group">
                 <label asp-for="ClassChangeRequest.NewClassId" class="control-label"></label>
-                <select asp-for="ClassChangeRequest.NewClassId" class="form-control" asp-items="ViewBag.NewClassId"></select>
+                <select asp-for="ClassChangeRequest.NewClassId" class="form-control"  asp-items="ViewBag.NewClassId"></select>
                 <span asp-validation-for="ClassChangeRequest.NewClassId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+            </div>*@
+@*            <div class="form-group">
                 <label asp-for="ClassChangeRequest.RequestDate" class="control-label"></label>
                 <input asp-for="ClassChangeRequest.RequestDate" class="form-control" />
                 <span asp-validation-for="ClassChangeRequest.RequestDate" class="text-danger"></span>
@@ -38,7 +38,6 @@
                 <label asp-for="ClassChangeRequest.IsApproved" class="control-label"></label>
                 <select asp-for="ClassChangeRequest.IsApproved" class="form-control">
                     <option value="true">Accept</option>
-                    <option value="false">Reject</option>
                 </select>
                 <span asp-validation-for="ClassChangeRequest.IsApproved" class="text-danger"></span>
             </div>

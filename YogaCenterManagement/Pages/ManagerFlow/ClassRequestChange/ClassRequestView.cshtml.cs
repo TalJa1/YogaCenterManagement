@@ -29,7 +29,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.ClassRequestChange
         {
             if (_classChangeRequestService.GetAll() != null)
             {
-                ClassChangeRequest = _classChangeRequestService.GetAll(include: x => x.Include(x =>x.Member).Include(x => x.OldClass).Include(x => x.NewClass));
+                ClassChangeRequest = _classChangeRequestService.GetAll(include: x => x.Include(x =>x.Member).Include(x => x.OldClass).Include(x => x.NewClass)).OrderByDescending(x=>x.RequestDate).ToList();
             }
         }
     }
