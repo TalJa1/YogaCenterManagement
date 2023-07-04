@@ -38,14 +38,14 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement
                 return NotFound();
             }
 
-            var equipmentrental =  _equipmentRentalService.GetAll().FirstOrDefault(m => m.RentalId == id);
+            var equipmentrental = _equipmentRentalService.GetAll().FirstOrDefault(m => m.RentalId == id);
             if (equipmentrental == null)
             {
                 return NotFound();
             }
             EquipmentRental = equipmentrental;
-           ViewData["EquipmentId"] = new SelectList(_equipmentService.GetAll(), "EquipmentId", "EquipmentId");
-           ViewData["MemberId"] = new SelectList(_memberService.GetAll(), "MemberId", "MemberId");
+            ViewData["EquipmentId"] = new SelectList(_equipmentService.GetAll(), "EquipmentId", "EquipmentId");
+            ViewData["MemberId"] = new SelectList(_memberService.GetAll(), "MemberId", "MemberId");
             return Page();
         }
 
@@ -53,26 +53,28 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-            var euquipment = _equipmentRentalService.GetAll().Where(x=>x.EquipmentId== EquipmentRental.EquipmentId).ToList();
+            //if (!ModelState.IsValid)
+            //{
+            //    return Page();
+            //}
+            var euquipment = _equipmentRentalService.GetAll().FirstOrDefault(x => x.EquipmentId == EquipmentRental.EquipmentId);
             if (EquipmentRental.Isapprove is true)
             {
-                foreach (var item in euquipment)
-                {
-                    item.IsReturn = false;
-                }
+                //foreach (var item in euquipment)
+                //{
+                euquipment.Isapprove = true;
+                euquipment.IsReturn = EquipmentRental.IsReturn;
+                //}
             }
             else
             {
-                foreach (var item in euquipment)
-                {
-                    item.IsReturn = true;
-                }
+                //foreach (var item in euquipment)
+                //{
+                euquipment.Isapprove = false;
+                euquipment.IsReturn = EquipmentRental.IsReturn;
+                //}
             }
-            _equipmentRentalService.Update(EquipmentRental);
+            _equipmentRentalService.Update(euquipment);
 
             return RedirectToPage("./EquipmentRentalView");
         }
