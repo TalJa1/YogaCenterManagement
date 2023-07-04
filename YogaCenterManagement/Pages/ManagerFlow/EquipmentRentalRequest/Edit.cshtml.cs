@@ -58,12 +58,25 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement
             //    return Page();
             //}
             var euquipment = _equipmentRentalService.GetAll().FirstOrDefault(x => x.RentalId == EquipmentRental.RentalId);
+            var listEquipment = _equipmentService.GetAll().Where(x => x.EquipmentId == EquipmentRental.EquipmentId);
             if (EquipmentRental.Isapprove is true)
             {
                 //foreach (var item in euquipment)
                 //{
                 euquipment.Isapprove = true;
                 euquipment.IsReturn = EquipmentRental.IsReturn;
+                foreach (var item in listEquipment)
+                {
+                    if (EquipmentRental.IsReturn is true)
+                    {
+                        item.Quantity -= 1;
+                    }
+                    else
+                    {
+                        item.Quantity += 1;
+                    }
+                    _equipmentService.Update(item);
+                }
                 //}
             }
             else
