@@ -58,28 +58,26 @@ namespace YogaCenterManagement.Pages.ManagerFlow.EquipmentRentalManagement
             //    return Page();
             //}
             var euquipment = _equipmentRentalService.GetAll().FirstOrDefault(x => x.RentalId == EquipmentRental.RentalId);
-            var listEquipment = _equipmentService.GetAll().Where(x => x.EquipmentId == EquipmentRental.EquipmentId);
-            if (EquipmentRental.Isapprove is true)
+            var getEquipment = _equipmentService.GetAll().FirstOrDefault(x => x.EquipmentId == EquipmentRental.EquipmentId);
+            if (EquipmentRental.Isapprove is true && EquipmentRental.IsReturn is false)
             {
                 //foreach (var item in euquipment)
                 //{
                 euquipment.Isapprove = true;
                 euquipment.IsReturn = EquipmentRental.IsReturn;
-                foreach (var item in listEquipment)
-                {
-                    if (EquipmentRental.IsReturn is true)
-                    {
-                        item.Quantity -= 1;
-                    }
-                    else
-                    {
-                        item.Quantity += 1;
-                    }
-                    _equipmentService.Update(item);
-                }
+                getEquipment.Quantity -= 1;
+
+                _equipmentService.Update(getEquipment);
                 //}
             }
-            else
+            else if (EquipmentRental.Isapprove is true && EquipmentRental.IsReturn is true)
+            {
+                euquipment.Isapprove = true;
+                getEquipment.Quantity += 1;
+                euquipment.IsReturn = EquipmentRental.IsReturn;
+                _equipmentService.Update(getEquipment);
+            }
+            else if (EquipmentRental.Isapprove is false && EquipmentRental.IsReturn is false)
             {
                 //foreach (var item in euquipment)
                 //{
