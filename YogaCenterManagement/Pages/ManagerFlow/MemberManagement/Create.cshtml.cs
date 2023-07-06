@@ -15,6 +15,7 @@ namespace YogaCenterManagement.Pages.ManagerFlow.MemberManagement
 {
     public class CreateModel : PageModel
     {
+        private readonly IList<string> RoleList = new List<string> { "admin", "instructor", "member" };
         private readonly MemberService _memberService;
         private readonly IValidator<Member> _validator;
 
@@ -30,12 +31,14 @@ namespace YogaCenterManagement.Pages.ManagerFlow.MemberManagement
             {
                 return RedirectToPage("/UserFlow/HomePage");
             }
+            ViewData["ListRole"] = new SelectList(RoleList);
             return Page();
         }
 
         [BindProperty]
         public Member Member { get; set; } = default!;
-        
+        [BindProperty]
+        public IList<string> ListRole { get; set; }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

@@ -42,7 +42,9 @@ namespace YogaCenterManagement.Pages.ManagerFlow.InstructorManagement
                     // Add model errors to TempData
                     TempData["Errors"] = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToArray();
                 }
-                var listMember = _memberService.GetAll();
+                var listIns = _instructorService.GetAll().Select(x => x.MemberId).ToList();
+                var listMember = _memberService.GetAll().Where(m => m.Role == "instructor" && !listIns.Contains(m.MemberId)).ToList();
+
                 if (memberId != null)
                 {
                     ViewData["Member"] = new SelectList(listMember, "MemberId", "Username", memberId);
@@ -81,12 +83,12 @@ namespace YogaCenterManagement.Pages.ManagerFlow.InstructorManagement
                 {
                     throw new Exception("Member is not available now. Please choose another.");
                 }
-                var obj = new Instructor 
+                var obj = new Instructor
                 {
                     InstructorId = Instructor.InstructorId,
                     MemberId = member.MemberId,
-                    IsSalaryChangeRequested= false,
-                    Salary=Instructor.Salary,
+                    IsSalaryChangeRequested = false,
+                    Salary = Instructor.Salary,
                 };
                 _instructorService.Add(obj);
                 return RedirectToPage("InstructorView");

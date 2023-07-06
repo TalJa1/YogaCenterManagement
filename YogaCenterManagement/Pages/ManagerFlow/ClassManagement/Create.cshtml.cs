@@ -55,7 +55,8 @@ namespace YogaCenterManagement.Pages.ManagerFlow
                         TempData["Errors"] = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToArray();
                     }
                     var listIns = _classService.GetAll().Select(c => c.InstructorId).Distinct().ToList();
-                    var listInstructor = _instructorService.GetAll(include: x => x.Include(z => z.Member)).Where(i => !listIns.Contains(i.InstructorId)).ToList(); var listRoom = _roomService.GetAll();
+                    var listInstructor = _instructorService.GetAll(include: x => x.Include(z => z.Member)).Where(i => !listIns.Contains(i.InstructorId)).ToList();
+                    var listRoom = _roomService.GetAll();
                     var listSlot = _slotService.GetAll();
                     if (instructorId != null)
                     {

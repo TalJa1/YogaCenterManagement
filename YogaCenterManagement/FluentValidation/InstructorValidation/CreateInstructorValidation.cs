@@ -1,10 +1,12 @@
 ﻿using FluentValidation;
+using Repository.DAO;
 using Repository.Models;
 
 namespace YogaCenterManagement.FluentValidation.InstructorValidation
 {
     public class CreateInstructorValidation : AbstractValidator<Instructor>
     {
+        MemberService memberService;
         public CreateInstructorValidation()
         {
             RuleFor(x => x.Salary)
