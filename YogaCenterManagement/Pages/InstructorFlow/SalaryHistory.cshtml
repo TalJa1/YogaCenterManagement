@@ -1,0 +1,46 @@
+﻿@page
+@model YogaCenterManagement.Pages.InstructorFlow.SalaryHistoryModel
+
+@{
+    ViewData["Title"] = "SalaryHistory";
+}
+
+<h1>SalaryHistory</h1>
+
+<p>
+    <a asp-page="SalaryPage">Request change salary</a>
+</p>
+<h3>Current Salary: @Model.Instructor.Salary </h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].NewSalary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].RequestDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].IsApproved)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.SalaryChangeRequest) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewSalary)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RequestDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsApproved)
+            </td>
+            <td>
+            
+        </tr>
+}
+    </tbody>
+</table>

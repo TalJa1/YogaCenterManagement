@@ -1,0 +1,122 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Class</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            @if (!string.IsNullOrEmpty(ViewData["Fail"]?.ToString()))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewData["Fail"]
+                </div>
+            }
+            @if (TempData["Errors"] != null)
+            {
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach (var error in (string[])TempData["Errors"])
+                        {
+                            <li>@error</li>
+                        }
+                    </ul>
+                </div>
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="createClassViewModel.ClassName" class="control-label"></label>
+                <input asp-for="createClassViewModel.ClassName" class="form-control" />
+                <span asp-validation-for="createClassViewModel.ClassName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="createClassViewModel.Instructor.Member.FullName" class="control-label"></label>
+                <select asp-for="InstructorId" class="form-control" asp-items="ViewBag.Instructor">
+                    <option selected>
+                        Choose
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="createClassViewModel.Room.RoomName" class="control-label"></label>
+                <select asp-for="RoomId" class="form-control" asp-items="ViewBag.Room">
+                    <option selected>
+                        Choose
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="createClassViewModel.Slot.SlotName" class="control-label"></label>
+                <select asp-for="SlotId" class="form-control" asp-items="ViewBag.Slot">
+                    <option selected>
+                        Choose
+                    </option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="createClassViewModel.BeginDate" class="control-label"></label>
+                <input asp-for="createClassViewModel.BeginDate" class="form-control" />
+                <span asp-validation-for="createClassViewModel.BeginDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="createClassViewModel.EndDate" class="control-label"></label>
+                <input asp-for="createClassViewModel.EndDate" class="form-control" />
+                <span asp-validation-for="createClassViewModel.EndDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-static my-3">
+                    <label asp-for="createClassViewModel.StartTime" class="control-label"></label>
+                    <input asp-for="createClassViewModel.StartTime" type="time" class="form-control">
+                    <span asp-validation-for="createClassViewModel.StartTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="input-group input-group-static my-3">
+                    <label asp-for="createClassViewModel.EndTime" class="control-label"></label>
+                    <input asp-for="createClassViewModel.EndTime" type="time" class="form-control">
+                    <span asp-validation-for="createClassViewModel.EndTime" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="createClassViewModel.Capacity" class="control-label"></label>
+                <input asp-for="createClassViewModel.Capacity" min="0" class="form-control" />
+                <span asp-validation-for="createClassViewModel.Capacity" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="createClassViewModel.IsApproved" />
+            <div class="form-group">
+                <label asp-for="createClassViewModel.MoneyNeedToPay" class="control-label"></label>
+                <input asp-for="createClassViewModel.MoneyNeedToPay" class="form-control" />
+                <span asp-validation-for="createClassViewModel.MoneyNeedToPay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="ClassView">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script type="text/javascript">
+    window.onload = function () {
+        if ('@TempData["Message"]' != "") {
+            $.notify("@TempData["Message"]", { color: "#fff", background: "#20D67B" })
+        }
+        else if ('@TempData["ErrorMessage"]' != "") {
+            $.notify("@TempData["ErrorMessage"]", { color: "#fff", background: "#D44950" })
+        }
+    }
+</script>

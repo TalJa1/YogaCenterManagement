@@ -1,0 +1,45 @@
+﻿@page
+@model YogaCenterManagement.Pages.InstructorFlow.CreateEventModel
+
+@{
+    ViewData["Title"] = "CreateEvent";
+}
+
+<h1>Create Event</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Instructor.InstructorId" />
+            <div class="form-group">
+                <label asp-for="EventRequest.ClassId" class="control-label"></label>
+                <select asp-for="EventRequest.ClassId" asp-items="Model.Class">
+                    <option value="">-- Select Class --</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventRequest.EventName" class="control-label"></label>
+                <input asp-for="EventRequest.EventName" class="form-control" />
+                <span asp-validation-for="EventRequest.EventName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EventRequest.EventDescription" class="control-label"></label>
+                <input asp-for="EventRequest.EventDescription" class="form-control" />
+                <span asp-validation-for="EventRequest.EventDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="../InstructorFlow/EventList">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

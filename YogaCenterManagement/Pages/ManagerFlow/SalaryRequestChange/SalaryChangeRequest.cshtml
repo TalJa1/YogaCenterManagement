@@ -1,0 +1,67 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.SalaryRequestChange.SalaryChangeRequestModel
+
+@{
+    ViewData["Title"] = "SalaryChangeRequest";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].RequestId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].NewSalary)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].RequestDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].IsApproved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SalaryChangeRequest[0].Instructor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.SalaryChangeRequest)
+        {
+            @if (item.IsApproved is false)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NewSalary)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RequestDate)
+                    </td>
+                    <td>
+                        @if (item.IsApproved is false)
+                        {
+                            <span>Rejected</span>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Instructor.Member.FullName)
+                    </td>
+                    <td>
+                        @if (item.IsApproved is false)
+                        {
+                            <a asp-page="./Edit" asp-route-id="@item.RequestId">Accept this request</a>
+                        }
+                        <a asp-page="./Delete" asp-route-id="@item.RequestId">Delete</a>
+                    </td>
+                </tr>
+            }
+
+        }
+    </tbody>
+</table>

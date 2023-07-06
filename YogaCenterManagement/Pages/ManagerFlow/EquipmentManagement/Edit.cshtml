@@ -1,0 +1,57 @@
+﻿@page
+@model YogaCenterManagement.Pages.ManagerFlow.EquipmentManagement.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Equipment</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            @if (!string.IsNullOrEmpty(ViewData["Fail"]?.ToString()))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ViewData["Fail"]
+                </div>
+            }
+            @if (TempData["Errors"] != null)
+            {
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach (var error in (string[])TempData["Errors"])
+                        {
+                            <li>@error</li>
+                        }
+                    </ul>
+                </div>
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <input type="hidden" asp-for="UpdateEquipmentViewModels.EquipmentId" />
+            <div class="form-group">
+                <label asp-for="UpdateEquipmentViewModels.EquipmentName" class="control-label"></label>
+                <input asp-for="UpdateEquipmentViewModels.EquipmentName" class="form-control" />
+                <span asp-validation-for="UpdateEquipmentViewModels.EquipmentName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UpdateEquipmentViewModels.Quantity" class="control-label"></label>
+                <input asp-for="UpdateEquipmentViewModels.Quantity" min="0" class="form-control" />
+                <span asp-validation-for="UpdateEquipmentViewModels.Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./EquipmentView">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

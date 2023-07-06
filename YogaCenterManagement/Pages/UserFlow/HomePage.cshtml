@@ -1,0 +1,203 @@
+﻿@page
+@model YogaCenterManagement.Pages.UserFlow.HomePageModel
+
+@{
+    ViewData["Title"] = "HomePage";
+}
+
+<h1>HomePage</h1>
+<style>
+    .horizontal-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .horizontal-item {
+        margin-bottom: 0;
+    }
+
+    .btn-link {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        font: inherit;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+
+        .btn-link:hover {
+            color: blue;
+        }
+
+    .disabled-link {
+        pointer-events: none; /* Disable click events */
+        color: #999999; /* Change link color to indicate it's disabled */
+        cursor: not-allowed; /* Show not-allowed cursor on hover */
+        text-decoration: none; /* Remove underline */
+    }
+
+</style>
+@if (HttpContext.Session.GetString("email") != null)
+{
+    <p>
+        Welcome @HttpContext.Session.GetString("email")
+    </p>
+    <div class="horizontal-container">
+        <form asp-page="/Logout" method="post" id="logoutForm" class="horizontal-item">
+            <button type="submit" class="btn btn-link">Logout</button>
+        </form>
+        <p class="horizontal-item">
+            <a asp-page="UserInfoEdit">UserInfo</a>
+        </p>
+        @if (Model.IsEnrolledAll())
+        {
+            <p class="horizontal-item">
+                <a asp-page="EquipmentPage">Equipment</a>
+            </p>
+
+            <p class="horizontal-item">
+                <a asp-page="ChangeClassRequestViewPage">Change History</a>
+            </p>
+        }
+        <p class="horizontal-item">
+            <a asp-page="RentalHistory">Rental history</a>
+        </p>
+    </div>
+
+}
+else
+{
+    <p>
+        @*<a asp-page="create">create new</a>*@
+        <a asp-page="LoginPage">Login</a>
+    </p>
+}
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].ClassName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].BeginDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].EndDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].EndTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].Slot)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].MoneyNeedToPay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].Instructor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Class[0].Room)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Class)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BeginDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Slot.SlotName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MoneyNeedToPay) $
+                </td>
+                <td>
+                    @if (item.Instructor != null)
+                    {
+                        <span>@Model.InstructorNames[Model.Class.IndexOf(item)]</span>
+                    }
+                    else
+                    {
+                        <span>Unknown</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Room.RoomName)
+                </td>
+                <td>
+                    @if (HttpContext.Session.GetString("email") != null)
+                    {
+                        if (Model.IsEnrolled(item.ClassId))
+                        {
+                            <div>
+                                <a>Enrolled</a>
+                                <p class="horizontal-item">
+                                    <a asp-page="ChangeClassRequestPage" asp-route-classId="@item.ClassId">Change Class</a>
+                                </p>
+                            </div>
+                        }
+                        else
+                        {
+                            <a asp-page="ClassEnroll" asp-route-id="@item.ClassId">Pay and Enroll</a>
+                        }
+                    }
+                    else
+                    {
+                        <a asp-page="ClassEnroll" asp-route-id="@item.ClassId" class="disabled-link">Pay and Enroll</a>
+                    }
+
+                    @*<a asp-page="./Details" asp-route-id="@item.ClassId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ClassId">Delete</a>*@
+                    @*           <form method="post" asp-page-handler="AddToCart" asp-route-productId="@item.ClassId">
+                <button type="submit" class="add-to-cart">Pay and Enroll</button>
+                </form>*@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (ViewData["success"] != null)
+{
+    <script>
+        $(function () {
+            var message = "@Html.Raw(ViewData["success"] as string)";
+            alert(message);
+        });
+    </script>
+}
+
+@if (ViewData["errSession"] != null)
+{
+    <script>
+        $(function () {
+            var message = "@Html.Raw(ViewData["errSession"] as string)";
+            alert(message);
+        });
+    </script>
+}
+
+

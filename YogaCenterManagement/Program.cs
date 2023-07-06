@@ -4,8 +4,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-DependencyInjection.ConfigureServices(builder.Services);
-builder.Services.AddSession();
+//DependencyInjection.ConfigureServices(builder.Services);
+builder.Services.ConfigureServices();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
