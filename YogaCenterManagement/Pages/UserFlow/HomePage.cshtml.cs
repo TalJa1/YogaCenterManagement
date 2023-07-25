@@ -91,6 +91,12 @@ namespace YogaCenterManagement.Pages.UserFlow
             return false;
         }
 
+        public IActionResult OnPostClearErrorSession()
+        {
+            HttpContext.Session.Remove("error");
+            return RedirectToPage("/UserFlow/HomePage");
+        }
+
         public bool IsEnrolledAll()
         {
             var email = HttpContext.Session.GetString("email");

@@ -79,13 +79,11 @@ else
 
 @if (HttpContext.Session.GetInt32("error") == 1)
 {
-    <script>
-        window.onload = function () {
-            alert("You can only enroll one class in a moment");
-        };
-    </script>
+    <h3 style="color: red">You can only enroll one class in a moment</h3>
+    <form method="post" asp-page-handler="ClearErrorSession">
+        <button type="submit">Clear Error</button>
+    </form>
 }
-
 
 
 <table class="table">
