@@ -67,6 +67,12 @@ namespace YogaCenterManagement.Pages.UserFlow
             if (emailCheck != null)
             {
                 var memberCheck = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(emailCheck));
+                var isEnrolled = enrollmentService.GetAll().FirstOrDefault(m => m.MemberId == memberCheck.MemberId);
+                if (isEnrolled != null)
+                {
+                    HttpContext.Session.SetInt32("error", 1);
+                    return RedirectToPage("/UserFlow/HomePage");
+                }
                 Payment pay = new Payment
                 {
                     ClassId = classId,

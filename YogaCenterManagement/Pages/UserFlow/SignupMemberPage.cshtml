@@ -23,6 +23,10 @@
                 <input asp-for="Member.Email" class="form-control" />
                 <span asp-validation-for="Member.Email" class="text-danger"></span>
             </div>
+            @if (ViewData["duplicate"] != null)
+            {
+                <span class="text-danger">@ViewData["duplicate"]</span>
+            }
             <div class="form-group">
                 <label asp-for="Member.Password" class="control-label"></label>
                 <input asp-for="Member.Password" class="form-control" type="password"/>

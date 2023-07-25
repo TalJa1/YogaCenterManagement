@@ -26,16 +26,21 @@ namespace YogaCenterManagement.Pages.UserFlow
 
         [BindProperty]
         public Member Member { get; set; } = default!;
-        
+
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPostAsync()
         {
             var emailCheck = memberService.GetAll().FirstOrDefault(m => m.Email.Equals(Member.Email));
-            if(emailCheck == null)
+            if (emailCheck == null)
             {
                 Member.Role = "member";
                 memberService.Add(Member);
+            }
+            else
+            {
+                ViewData["duplicate"] = "Email is existed";
+                return Page();
             }
 
             return RedirectToPage("LoginPage");
